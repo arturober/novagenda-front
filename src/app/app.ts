@@ -1,15 +1,12 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { MatDrawer, MatDrawerContainer, MatDrawerContent } from '@angular/material/sidenav';
-import { MatToolbar } from '@angular/material/toolbar';
-import { MatIconButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [MatDrawer, MatDrawerContainer, MatDrawerContent, MatToolbar, MatIconButton, MatIcon],
+  imports: [ RouterOutlet, MatDrawer, MatDrawerContainer, MatDrawerContent ],
   templateUrl: './app.html',
   styleUrl: './app.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class App {
   sideMenuOpen = signal(false);

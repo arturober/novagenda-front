@@ -1,0 +1,68 @@
+<div class="text-center mb-8 mt-8 header">
+  <mat-icon aria-label="Novagenda Logo" svgIcon="select-check-box" class="!h-8 !w-8"></mat-icon>
+  <h1 class="text-3xl font-bold text-(--mat-sys-primary) mb-2">Novagenda</h1>
+  <p class="text-(--mat-sys-secondary)">Organiza tu vida, una tarea a la vez</p>
+</div>
+
+<mat-card class="w-110 max-w-[90%] p-4 md:p-6 mb-8" appearance="raised">
+  <mat-card-header>
+    <mat-card-title> Iniciar Sesión </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="mt-8">
+    <form [formRoot]="loginForm" class="flex flex-col gap-4">
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput [formField]="loginForm.email" placeholder="email@email.com" />
+        @let emailErrors = loginForm.email().errors();
+        @for (error of emailErrors; track $index) {
+          <mat-error>{{error.message}}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Contraseña</mat-label>
+        <button matPrefix matIconButton aria-label="Show" (click)="showPass.update(s => !s)">
+          <mat-icon [svgIcon]="showPass() ? 'eye-hidden' : 'eye-visible'"></mat-icon>
+        </button>
+        <input
+          [type]="showPass() ? 'text' : 'password'"
+          matInput
+          [formField]="loginForm.password"
+          placeholder="*******"
+        />
+        @if (loginForm.password().value()) {
+          <button
+            matSuffix
+            matIconButton
+            aria-label="Clear"
+            (click)="loginForm.password().value.set('')"
+          >
+            <mat-icon svgIcon="close"></mat-icon>
+          </button>
+        }
+        @let passErrors = loginForm.password().errors();
+        @for (error of passErrors; track $index) {
+          <mat-error>{{error.message}}</mat-error>
+        }
+      </mat-form-field>
+      <mat-checkbox class="text-gray-600">Recuerdame</mat-checkbox>
+      <button matButton="filled" class="w-full">Login</button>
+    </form>
+    <div class="relative my-6">
+      <div class="absolute inset-0 flex items-center">
+        <div class="w-full border-t border-gray-300"></div>
+      </div>
+      <div class="relative flex justify-center text-sm">
+        <span class="px-4 bg-white text-(--mat-sys-secondary)">O continúa con</span>
+      </div>
+    </div>
+
+    <div class="row col-2 offset-sm-2">
+      <div googleLogin class="w-full" (login)="loggedGoogle($event)"></div>
+    </div>
+
+    <p class="mt-6 text-lg text-(--mat-sys-secondary)">
+      ¿No tienes una cuenta?
+      <a [routerLink]="['/auth', 'register']" class="inline-block">Registrate aquí</a>
+    </p>
+  </mat-card-content>
+</mat-card>

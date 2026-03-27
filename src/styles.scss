@@ -1,0 +1,34 @@
+/* You can add global styles to this file, and also import other style files */
+
+@use '@angular/material' as mat;
+
+@use "tailwindcss";
+
+:root {
+  --mat-toolbar-standard-height: 56px; /* Misma altura que en móvil*/
+  --mat-form-field-filled-container-color: var(--mat-sys-surface-container);
+}
+
+html {
+  color-scheme: light dark;
+  @include mat.theme((
+    color: mat.$blue-palette,
+    typography: "Google Sans",
+    density: 0
+  ));
+
+  @include mat.card-overrides((
+    elevated-container-elevation: var(--mat-sys-level2),
+    elevated-container-color: var(--mat-sys-surface-container-lowest),
+    outlined-container-color: var(--mat-sys-surface-container-lowest),
+  ));
+
+  font-family: "Google Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  container-type: scroll-state; /* Para gestionar el estado del scroll internamente */
+  container-name: page-container;
+  background-color: var(--bg-gray-50);
+}
+
+a {
+  color: var((--mat-sys-primary));
+}

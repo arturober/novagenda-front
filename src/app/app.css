@@ -1,0 +1,25 @@
+.page-header {
+  --mat-toolbar-container-background-color: var(--mat-sys-primary);
+  --mat-toolbar-container-text-color: var(--mat-sys-on-primary);
+  --mat-icon-button-icon-color: var(--mat-sys-on-primary);
+}
+
+@supports (container-type: scroll-state) {
+  @media (max-width: 768px), (max-height: 500px) { /*Pantallas pequeñas*/
+    @container page-container scroll-state(scrolled: bottom) {
+      .page-header:not(:focus-within) {
+        translate: 0 calc(-1 * var(--mat-toolbar-standard-height)); /* Tamaño barra móvil */
+      }
+
+      .tabs-wrapper adaptative-tabs:not(:focus-within) {
+        translate: 0 100%;
+      }
+    }
+
+    @container page-container scroll-state((scrollable: top) and (not (scrollable: bottom))) {
+      .tabs-wrapper adaptative-tabs:not(:focus-within) {
+        translate: 0 0;
+      }
+    }
+  }
+}
