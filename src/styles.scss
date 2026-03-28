@@ -2,15 +2,8 @@
 
 @use '@angular/material' as mat;
 
-@use "tailwindcss";
-
 :root {
-  --mat-toolbar-standard-height: 56px; /* Misma altura que en móvil*/
-  --mat-form-field-filled-container-color: var(--mat-sys-surface-container);
-}
-
-html {
-  color-scheme: light dark;
+    color-scheme: light dark;
   @include mat.theme((
     color: mat.$blue-palette,
     typography: "Google Sans",
@@ -18,17 +11,98 @@ html {
   ));
 
   @include mat.card-overrides((
-    elevated-container-elevation: var(--mat-sys-level2),
     elevated-container-color: var(--mat-sys-surface-container-lowest),
     outlined-container-color: var(--mat-sys-surface-container-lowest),
   ));
 
+  @include mat.sidenav-overrides((
+    content-background-color: var(--color-gray-50),
+    container-shape: var(--mat-sys-corner-none)
+  ));
+
+  @include mat.button-overrides(
+    (
+      filled-container-shape: var(--mat-sys-corner-small),
+    )
+  );
+
+  @include mat.fab-overrides((
+    container-color: var(--mat-sys-primary),
+    foreground-color: var(--mat-sys-on-primary),
+    container-shape: var(--mat-sys-corner-full)
+  ));
+
+  @include mat.expansion-overrides((
+    container-background-color:  var(--mat-sys-surface-container-lowest),
+  ));
+
+  --mat-toolbar-standard-height: calc(56px + env(safe-area-inset-top)); /* Misma altura que en móvil*/
+  --mat-form-field-filled-container-color: var(--mat-sys-surface-container);
+  --bottom-nav-height: calc(4.5rem + env(safe-area-inset-left));
+}
+
+html {
   font-family: "Google Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   container-type: scroll-state; /* Para gestionar el estado del scroll internamente */
   container-name: page-container;
-  background-color: var(--bg-gray-50);
 }
 
 a {
-  color: var((--mat-sys-primary));
+  color: var(--mat-sys-primary);
+}
+
+.mdc-snackbar.error {
+  @include mat.snack-bar-overrides((
+    button-color: white,
+    container-color: var(--color-red-800),
+  ));
+}
+
+.mdc-snackbar.success {
+  @include mat.snack-bar-overrides((
+    button-color: white,
+    container-color: var(--color-green-800),
+  ));
+}
+
+.page-header {
+  --mat-toolbar-container-background-color: var(--mat-sys-primary);
+  --mat-toolbar-container-text-color: var(--mat-sys-on-primary);
+  --mat-icon-button-icon-color: var(--mat-sys-on-primary);
+}
+
+.tabs-wrapper {
+    background-color: color-mix(in srgb, var(--mat-sys-surface-container-lowest) 80%, transparent);
+}
+
+mat-expansion-panel .mat-expansion-panel-body {
+  padding: 0 1rem 1rem 1rem;
+}
+
+mat-card.task-card {
+  --mat-card-outlined-outline-width: 1px 1px 1px 4px;
+
+  &.task-priority-low {
+    --mat-card-outlined-outline-color: var(--mat-sys-outline-variant) var(--mat-sys-outline-variant) var(--mat-sys-outline-variant) light-dark(var(--color-green-500), var(--color-green-700));
+  }
+}
+
+@supports (container-type: scroll-state) {
+  @media (max-width: 768px), (max-height: 500px) { /*Pantallas pequeñas*/
+    @container page-container scroll-state(scrolled: bottom) {
+      .page-header:not(:focus-within) {
+        translate: 0 calc(-1 * var(--mat-toolbar-standard-height)); /* Tamaño barra móvil */
+      }
+
+      .tabs-wrapper adaptative-tabs:not(:focus-within) {
+        translate: 0 100%;
+      }
+    }
+
+    @container page-container scroll-state((scrollable: top) and (not (scrollable: bottom))) {
+      .tabs-wrapper adaptative-tabs:not(:focus-within) {
+        translate: 0 0;
+      }
+    }
+  }
 }

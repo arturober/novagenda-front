@@ -1,100 +1,32 @@
-<div class="page-header sticky top-0 left-0 transition-[translate] bg-(--mat-sys-primary)">
-  <mat-toolbar>
-    <button matIconButton="tonal">
-      <mat-icon>menu</mat-icon>
-    </button>
-    Home
-  </mat-toolbar>
-</div>
-<main class="p-2">
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-  <p>Jajaja</p>
-</main>
-<div class="tabs-wrapper sticky bottom-0 z-10 overflow-hidden">
-  <adaptative-tabs
-    class="transition-[translate] block w-screen"
-    [tabs]="[
-      { text: 'tab 1', url: '', icon: 'home' },
-      { text: 'tab 1', url: '', icon: 'home' },
-      { text: 'tab 2', url: '', icon: 'home' },
-      { text: 'tab 3', url: '', icon: 'home' },
-    ]"
-  ></adaptative-tabs>
+<div class="min-h-screen flex flex-col">
+  <div class="page-header sticky top-0 left-0 z-20 transition-[translate] bg-(--mat-sys-primary)">
+    <mat-toolbar>
+      <button matIconButton="tonal" (click)="openMenu()" class="xl:hidden!">
+        <mat-icon aria-hidden="false" aria-label="Side Menu Open" svgIcon="menu"></mat-icon>
+      </button>
+      Novagenda
+    </mat-toolbar>
+  </div>
+  <div class="grow relative @container flex flex-col min-h-full">
+    <main class="p-4 grow @3xl:ms-(--bottom-nav-height)">
+      <router-outlet></router-outlet>
+    </main>
+    <div
+      class="tabs-wrapper sticky bottom-0 z-10 @3xl:top-0 @3xl:left-0 @3xl:absolute @3xl:h-full"
+    >
+      <adaptative-tabs
+        class="transition-[translate] @3xl:top-(--mat-toolbar-standard-height) @3xl:sticky h-fit"
+        [tabs]="[
+          { text: 'Lista', url: 'list', icon: 'list-alt' },
+          { text: 'Hoy', url: 'today', icon: 'today' },
+          { text: 'Semana', url: 'week', icon: 'date-range' },
+          { text: 'Mes', url: 'month', icon: 'calendar-month' },
+        ]"
+      >
+        <button matFab aria-label="Añadir tarea">
+          <mat-icon svgIcon="add"></mat-icon>
+        </button>
+      </adaptative-tabs>
+    </div>
+  </div>
 </div>

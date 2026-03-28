@@ -30,7 +30,7 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/material-theme.scss", "src/styles.scss"],
+            "styles": ["src/tailwind.css", "src/material-theme.scss", "src/styles.scss"],
             "server": "src/main.server.ts",
             "outputMode": "server",
             "security": {

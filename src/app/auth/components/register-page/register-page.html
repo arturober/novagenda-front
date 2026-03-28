@@ -6,53 +6,99 @@
 
 <mat-card class="w-110 max-w-[90%] p-4 md:p-6 mb-8" appearance="raised">
   <mat-card-header>
-    <mat-card-title> Iniciar Sesión </mat-card-title>
+    <mat-card-title>Regístrate</mat-card-title>
   </mat-card-header>
   <mat-card-content class="mt-8">
-    <form [formRoot]="loginForm" class="flex flex-col gap-4">
+    <form [formRoot]="registerForm" class="flex flex-col gap-4">
       <mat-form-field class="w-full" appearance="outline">
-        <mat-label>Email</mat-label>
-        <input type="email" matInput [formField]="loginForm.email" placeholder="email@email.com" />
-        @let emailErrors = loginForm.email().errors();
-        @for (error of emailErrors; track $index) {
-          <mat-error>{{error.message}}</mat-error>
+        <mat-label>Nombre</mat-label>
+        <input
+          type="text"
+          matInput
+          [formField]="registerForm.name"
+          placeholder="Marta Martínez"
+        />
+        @let nameErrors = registerForm.name().errors();
+        @for (error of nameErrors; track $index) {
+          <mat-error>{{ error.message }}</mat-error>
         }
       </mat-form-field>
       <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          type="email"
+          matInput
+          [formField]="registerForm.email"
+          placeholder="email@email.com"
+        />
+        @let emailErrors = registerForm.email().errors();
+        @for (error of emailErrors; track $index) {
+          <mat-error>{{ error.message }}</mat-error>
+        }
+      </mat-form-field>
+
+      @let passErrors = registerForm.password().errors();
+      <mat-form-field class="w-full" appearance="outline" [class.mb-4]="passErrors.find(e => e.kind === 'pattern')">
         <mat-label>Contraseña</mat-label>
-        <button matPrefix matIconButton aria-label="Show" (click)="showPass.update(s => !s)">
+        <button matPrefix matIconButton tabindex="-1" aria-label="Show" (click)="showPass.update(s => !s)">
           <mat-icon [svgIcon]="showPass() ? 'eye-hidden' : 'eye-visible'"></mat-icon>
         </button>
         <input
           [type]="showPass() ? 'text' : 'password'"
           matInput
-          [formField]="loginForm.password"
+          [formField]="registerForm.password"
           placeholder="*******"
         />
-        @if (loginForm.password().value()) {
+        @if (registerForm.password().value()) {
           <button
             matSuffix
             matIconButton
             aria-label="Clear"
-            (click)="loginForm.password().value.set('')"
+            (click)="registerForm.password().value.set('')"
           >
             <mat-icon svgIcon="close"></mat-icon>
           </button>
         }
-        @let passErrors = loginForm.password().errors();
+
         @for (error of passErrors; track $index) {
-          <mat-error>{{error.message}}</mat-error>
+          <mat-error>{{ error.message }}</mat-error>
         }
       </mat-form-field>
-      <mat-checkbox class="text-gray-600">Recuerdame</mat-checkbox>
-      <button matButton="filled" class="w-full">Login</button>
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Repite Contraseña</mat-label>
+        <button matPrefix matIconButton tabindex="-1" aria-label="Show" (click)="showPass2.update(s => !s)">
+          <mat-icon [svgIcon]="showPass2() ? 'eye-hidden' : 'eye-visible'"></mat-icon>
+        </button>
+        <input
+          [type]="showPass2() ? 'text' : 'password'"
+          matInput
+          [formField]="registerForm.repeatPassword"
+          placeholder="*******"
+        />
+        @if (registerForm.repeatPassword().value()) {
+          <button
+            matSuffix
+            matIconButton
+            aria-label="Clear"
+            (click)="registerForm.repeatPassword().value.set('')"
+          >
+            <mat-icon svgIcon="close"></mat-icon>
+          </button>
+        }
+
+        @let pass2Errors = registerForm.repeatPassword().errors();
+        @for (error of pass2Errors; track $index) {
+          <mat-error>{{ error.message }}</mat-error>
+        }
+      </mat-form-field>
+      <button type="submit" matButton="filled" class="w-full" [disabled]="registerForm().invalid()">Crear cuenta</button>
     </form>
     <div class="relative my-6">
       <div class="absolute inset-0 flex items-center">
         <div class="w-full border-t border-gray-300"></div>
       </div>
       <div class="relative flex justify-center text-sm">
-        <span class="px-4 bg-white text-(--mat-sys-secondary)">O continúa con</span>
+        <span class="px-4 bg-white text-(--mat-sys-secondary)">O regístrate con</span>
       </div>
     </div>
 
@@ -61,8 +107,8 @@
     </div>
 
     <p class="mt-6 text-lg text-(--mat-sys-secondary)">
-      ¿No tienes una cuenta?
-      <a [routerLink]="['/auth', 'register']" class="inline-block">Registrate aquí</a>
+      ¿Ya tienes cuenta?
+      <a [routerLink]="['/auth', 'login']" class="inline-block">Inicia sesión aquí</a>
     </p>
   </mat-card-content>
 </mat-card>

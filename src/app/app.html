@@ -1,6 +1,45 @@
-<mat-drawer-container class="min-h-screen" [hasBackdrop]="true" class="overflow-visible!">
-  <mat-drawer #drawer mode="side">I'm a drawer</mat-drawer>
-  <mat-drawer-content class="overflow-visible! flex flex-col md:flex-row">
+<mat-sidenav-container
+  class="min-h-screen"
+  [hasBackdrop]="!isBigScreen()"
+  class="overflow-visible!"
+>
+  <mat-sidenav
+    #drawer
+    mode="side"
+    [mode]="isBigScreen() ? 'side' : 'over'"
+    [disableClose]="isBigScreen()"
+    [fixedInViewport]="true"
+    [opened]="sideMenuOpen() && logged()"
+    (openedChange)="this.sideMenuService.open.set($event)"
+  >
+    <mat-list>
+      @if (user(); as user) {
+        <mat-list-item class="border-b border-b-gray-300">
+          <img matListItemAvatar [src]="user.photo" alt="Foto del usuario" />
+          <h3 matListItemTitle>{{ user.name }}</h3>
+          <p matListItemLine>{{ user.email }}</p>
+        </mat-list-item>
+      }
+    </mat-list>
+    <mat-nav-list>
+      <!-- <a
+        mat-list-item
+        [activated]="activeLink === link"
+        href="#{{ link }}"
+        (click)="$event.preventDefault(); activeLink = link"
+      >
+        <mat-icon matListItemIcon>folder</mat-icon>
+        <span matListItemTitle>{{ link | titlecase }}</span>
+      </a> -->
+    </mat-nav-list>
+    <mat-action-list>
+      <button mat-list-item (click)="logout()">
+        <mat-icon matListItemIcon aria-label="Cerrar sesión" svgIcon="logout"></mat-icon>
+        <h3 matListItemTitle>Cerrar Sesión</h3>
+      </button>
+    </mat-action-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="overflow-visible! flex flex-col md:flex-row">
     <router-outlet></router-outlet>
-  </mat-drawer-content>
-</mat-drawer-container>
+  </mat-sidenav-content>
+</mat-sidenav-container>

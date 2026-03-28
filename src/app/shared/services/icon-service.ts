@@ -16,7 +16,15 @@ export class IconService {
     'close',
     'eye-visible',
     'eye-hidden',
-    'select-check-box'
+    'select-check-box',
+    'menu',
+    'add',
+    'add-task',
+    'date-range',
+    'today',
+    'calendar-month',
+    'list-alt',
+    'logout'
   ];
 
   public registerIcons(): void {

@@ -1,25 +1,30 @@
 :host {
   /* Evitar barra táctil inferior en iOS */
   padding-bottom: env(safe-area-inset-bottom);
-  height: calc(5rem + env(safe-area-inset-bottom));
-  background-color: color-mix(in srgb, var(--mat-sys-surface) 90%, transparent);
-  color: var(--mat-sys-on-secondary-container);
+  height: var(--bottom-nav-height);
+  color: var(--mat-sys-secondary);
 
-  @media (orientation: landscape), (min-width: 768px) {
+  @container (min-width: 768px) {
     flex-direction: column;
-    justify-content: center;
-    gap: 2rem;
+    justify-content: start;
     border-top: 0;
     border-right: 1px;
-    height: 100%;
     padding-bottom: 0;
+    height: auto;
 
-    width: calc(80px + env(safe-area-inset-left)); /* Anchura más el notch */
+    width: var(--bottom-nav-height);
     padding-left: env(safe-area-inset-left);
   }
 }
 
 .mat-icon {
-  height: 1.8rem;
-  width: 1.8rem;
+  height: 2rem;
+  width: 2rem;
+}
+
+a {
+  color: var(--mat-sys-secondary);
+  &.active {
+    color: var(--mat-sys-primary);
+  }
 }

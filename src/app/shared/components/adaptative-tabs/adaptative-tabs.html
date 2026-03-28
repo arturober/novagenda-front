@@ -1,6 +1,18 @@
 @for (tab of tabs(); track $index) {
-  <a [routerLink]="tab.url" routerLinkActive="selected" class="grow h-full w-full flex flex-col justify-center items-center">
+  <a
+    matRipple
+    [matRippleRadius]="40"
+    [matRippleCentered]="true"
+    [routerLink]="tab.url"
+    [routerLink]="tab.url"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    class="h-full w-full flex flex-col justify-center items-center text-sm @3xl:py-2"
+  >
     <mat-icon aria-hidden="false" aria-label="Example home icon" [svgIcon]="tab.icon"></mat-icon>
     {{ tab.text }}
   </a>
 }
+<div class="h-full w-full flex flex-col justify-center items-center @3xl:py-2">
+  <ng-content></ng-content>
+</div>

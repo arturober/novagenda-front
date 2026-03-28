@@ -1,0 +1,13 @@
+<mat-accordion multi>
+  <mat-expansion-panel [(expanded)]="pendingExpanded">
+    <mat-expansion-panel-header>
+      <mat-panel-title> Pendientes </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="flex flex-col gap-2">
+      @for (task of tasks(); track task.id) {
+        <task-item></task-item>
+      }
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

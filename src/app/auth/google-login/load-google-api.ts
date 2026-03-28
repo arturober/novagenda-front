@@ -28,7 +28,7 @@ export class LoadGoogleApi {
     await this.#loader; // Espera a que se haya terminado de cargar (si no lo ha hecho ya)
     google.accounts.id.renderButton(
       btn,
-      { theme: 'filled_blue', size: 'large', type: 'standard', shape: 'pill', text: 'continue_with', locale: 'es' } // Diseño del botón
+      { theme: 'filled_blue', size: 'large', type: 'standard', shape: 'rectangular', text: 'continue_with', locale: 'es' } // Diseño del botón
     );
   }
 

@@ -20,7 +20,7 @@
       </mat-form-field>
       <mat-form-field class="w-full" appearance="outline">
         <mat-label>Contraseña</mat-label>
-        <button matPrefix matIconButton aria-label="Show" (click)="showPass.update(s => !s)">
+        <button matPrefix matIconButton tabindex="-1" aria-label="Show" (click)="showPass.update(s => !s)">
           <mat-icon [svgIcon]="showPass() ? 'eye-hidden' : 'eye-visible'"></mat-icon>
         </button>
         <input
@@ -44,8 +44,8 @@
           <mat-error>{{error.message}}</mat-error>
         }
       </mat-form-field>
-      <mat-checkbox class="text-gray-600">Recuerdame</mat-checkbox>
-      <button matButton="filled" class="w-full">Login</button>
+      <!-- <mat-checkbox class="text-gray-600">Recuerdame</mat-checkbox> -->
+      <button type="submit" matButton="filled" class="w-full" [disabled]="loginForm().invalid()">Login</button>
     </form>
     <div class="relative my-6">
       <div class="absolute inset-0 flex items-center">
@@ -61,7 +61,7 @@
     </div>
 
     <p class="mt-6 text-lg text-(--mat-sys-secondary)">
-      ¿No tienes una cuenta?
+      ¿No tienes cuenta?
       <a [routerLink]="['/auth', 'register']" class="inline-block">Registrate aquí</a>
     </p>
   </mat-card-content>

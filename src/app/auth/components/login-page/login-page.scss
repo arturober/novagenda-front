@@ -2,6 +2,7 @@
 
 :host {
   @include mat.card-overrides((
+    elevated-container-elevation: var(--mat-sys-level2),
     title-text-weight: var(--font-weight-bold),
     title-text-size: 1.5rem,
   ));

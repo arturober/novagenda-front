@@ -1,12 +1,21 @@
-import { Component, signal } from '@angular/core';
-import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
-import { MatIconButton, MatAnchor, MatButton } from '@angular/material/button';
-import { MatError, MatFormField, MatInput, MatLabel, MatSuffix, MatPrefix } from '@angular/material/input';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { email, form, FormField, FormRoot, required } from '@angular/forms/signals';
+import { MatAnchor, MatButton, MatIconButton } from '@angular/material/button';
+import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
-import { MatCheckbox } from '@angular/material/checkbox';
-import { RouterLink } from "@angular/router";
-import { GoogleLogin } from "../../google-login/google-login";
+import {
+  MatError,
+  MatFormField,
+  MatInput,
+  MatLabel,
+  MatPrefix,
+  MatSuffix,
+} from '@angular/material/input';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router, RouterLink } from '@angular/router';
+import { GoogleLogin } from '../../google-login/google-login';
+import { AuthService } from '../../services/auth-service';
 
 interface LoginModel {
   email: string;
@@ -32,10 +41,9 @@ interface LoginModel {
     MatPrefix,
     MatAnchor,
     MatButton,
-    MatCheckbox,
     RouterLink,
-    GoogleLogin
-],
+    GoogleLogin,
+  ],
   templateUrl: './login-page.html',
   styleUrl: './login-page.scss',
   host: {
@@ -43,6 +51,11 @@ interface LoginModel {
   },
 })
 export class LoginPage {
+  #authService = inject(AuthService);
+  #destroyRef = inject(DestroyRef);
+  #router = inject(Router);
+  #snackBar = inject(MatSnackBar);
+
   loginModel = signal<LoginModel>({
     email: '',
     password: '',
@@ -51,14 +64,25 @@ export class LoginPage {
   loginForm = form(
     this.loginModel,
     (schema) => {
-      required(schema.email, {message: "Campo obligatorio"});
-      required(schema.password, {message: "Campo obligatorio"});
-      email(schema.email, { message: "El correo no tiene un formato correcto"});
+      required(schema.email, { message: 'Campo obligatorio' });
+      required(schema.password, { message: 'Campo obligatorio' });
+      email(schema.email, { message: 'El correo no tiene un formato correcto' });
     },
     {
       submission: {
         action: async () => {
-          console.log("ASDFASDF");
+          this.#authService
+            .login(this.loginModel())
+            .pipe(takeUntilDestroyed(this.#destroyRef))
+            .subscribe({
+              next: () => this.#router.navigate(['/tasks']),
+              error: (err) => {
+                this.#snackBar.open(err.error.message ?? err.error.error, 'Cerrar', {
+                  duration: 3000,
+                  panelClass: 'error',
+                });
+              },
+            });
         },
       },
     },
@@ -67,6 +91,17 @@ export class LoginPage {
   showPass = signal(false);
 
   loggedGoogle(resp: google.accounts.id.CredentialResponse) {
-    console.log(resp.credential);
+    this.#authService
+      .loginGoogle(resp.credential)
+      .pipe(takeUntilDestroyed(this.#destroyRef))
+      .subscribe({
+        next: () => this.#router.navigate(['/tasks']),
+        error: (err) => {
+          this.#snackBar.open(err.error.message ?? err.error.error, 'Cerrar', {
+            duration: 3000,
+            panelClass: 'error',
+          });
+        },
+      });
   }
 }
