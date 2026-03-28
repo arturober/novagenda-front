@@ -3,22 +3,28 @@
 @use '@angular/material' as mat;
 
 :root {
-    color-scheme: light dark;
-  @include mat.theme((
-    color: mat.$blue-palette,
-    typography: "Google Sans",
-    density: 0
-  ));
+  color-scheme: light dark;
+  @include mat.theme(
+    (
+      color: mat.$blue-palette,
+      typography: 'Google Sans',
+      density: 0,
+    )
+  );
 
-  @include mat.card-overrides((
-    elevated-container-color: var(--mat-sys-surface-container-lowest),
-    outlined-container-color: var(--mat-sys-surface-container-lowest),
-  ));
+  @include mat.card-overrides(
+    (
+      elevated-container-color: var(--mat-sys-surface-container-lowest),
+      outlined-container-color: var(--mat-sys-surface-container-lowest),
+    )
+  );
 
-  @include mat.sidenav-overrides((
-    content-background-color: var(--color-gray-50),
-    container-shape: var(--mat-sys-corner-none)
-  ));
+  @include mat.sidenav-overrides(
+    (
+      content-background-color: var(--color-gray-50),
+      container-shape: var(--mat-sys-corner-none),
+    )
+  );
 
   @include mat.button-overrides(
     (
@@ -26,23 +32,31 @@
     )
   );
 
-  @include mat.fab-overrides((
-    container-color: var(--mat-sys-primary),
-    foreground-color: var(--mat-sys-on-primary),
-    container-shape: var(--mat-sys-corner-full)
-  ));
+  @include mat.fab-overrides(
+    (
+      container-color: var(--mat-sys-primary),
+      foreground-color: var(--mat-sys-on-primary),
+      container-shape: var(--mat-sys-corner-full),
+    )
+  );
 
-  @include mat.expansion-overrides((
-    container-background-color:  var(--mat-sys-surface-container-lowest),
-  ));
+  @include mat.expansion-overrides(
+    (
+      container-background-color: var(--mat-sys-surface-container-lowest),
+    )
+  );
 
-  --mat-toolbar-standard-height: calc(56px + env(safe-area-inset-top)); /* Misma altura que en móvil*/
+  --mat-toolbar-standard-height: calc(
+    56px + env(safe-area-inset-top)
+  ); /* Misma altura que en móvil*/
   --mat-form-field-filled-container-color: var(--mat-sys-surface-container);
   --bottom-nav-height: calc(4.5rem + env(safe-area-inset-left));
 }
 
 html {
-  font-family: "Google Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family:
+    'Google Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
   container-type: scroll-state; /* Para gestionar el estado del scroll internamente */
   container-name: page-container;
 }
@@ -52,17 +66,21 @@ a {
 }
 
 .mdc-snackbar.error {
-  @include mat.snack-bar-overrides((
-    button-color: white,
-    container-color: var(--color-red-800),
-  ));
+  @include mat.snack-bar-overrides(
+    (
+      button-color: white,
+      container-color: var(--color-red-800),
+    )
+  );
 }
 
 .mdc-snackbar.success {
-  @include mat.snack-bar-overrides((
-    button-color: white,
-    container-color: var(--color-green-800),
-  ));
+  @include mat.snack-bar-overrides(
+    (
+      button-color: white,
+      container-color: var(--color-green-800),
+    )
+  );
 }
 
 .page-header {
@@ -71,8 +89,8 @@ a {
   --mat-icon-button-icon-color: var(--mat-sys-on-primary);
 }
 
-.tabs-wrapper {
-    background-color: color-mix(in srgb, var(--mat-sys-surface-container-lowest) 80%, transparent);
+.tabs-wrapper adaptative-tabs {
+  background-color: color-mix(in srgb, var(--mat-sys-surface-container-lowest) 80%, transparent);
 }
 
 mat-expansion-panel .mat-expansion-panel-body {
@@ -83,24 +101,46 @@ mat-card.task-card {
   --mat-card-outlined-outline-width: 1px 1px 1px 4px;
 
   &.task-priority-low {
-    --mat-card-outlined-outline-color: var(--mat-sys-outline-variant) var(--mat-sys-outline-variant) var(--mat-sys-outline-variant) light-dark(var(--color-green-500), var(--color-green-700));
+    --mat-card-outlined-outline-color: var(--mat-sys-outline-variant) var(--mat-sys-outline-variant)
+      var(--mat-sys-outline-variant) light-dark(var(--color-green-500), var(--color-green-700));
+  }
+
+  &.task-priority-medium {
+    --mat-card-outlined-outline-color: var(--mat-sys-outline-variant) var(--mat-sys-outline-variant)
+      var(--mat-sys-outline-variant) light-dark(var(--color-orange-500), var(--color-orange-700));
+  }
+
+  &.task-priority-high {
+    --mat-card-outlined-outline-color: var(--mat-sys-outline-variant) var(--mat-sys-outline-variant)
+      var(--mat-sys-outline-variant) light-dark(var(--color-red-600), var(--color-red-800));
   }
 }
 
 @supports (container-type: scroll-state) {
-  @media (max-width: 768px), (max-height: 500px) { /*Pantallas pequeñas*/
+  @media (max-width: 768px), (max-height: 500px) {
+    /*Pantallas pequeñas*/
     @container page-container scroll-state(scrolled: bottom) {
       .page-header:not(:focus-within) {
         translate: 0 calc(-1 * var(--mat-toolbar-standard-height)); /* Tamaño barra móvil */
       }
 
-      .tabs-wrapper adaptative-tabs:not(:focus-within) {
+      .tabs-wrapper:not(:focus-within) {
         translate: 0 100%;
+      }
+
+      .page-body {
+        overflow: hidden;
       }
     }
 
-    @container page-container scroll-state((scrollable: top) and (not (scrollable: bottom))) {
-      .tabs-wrapper adaptative-tabs:not(:focus-within) {
+    @container page-container scroll-state(not (scrollable: bottom)) {
+      .tabs-wrapper:not(:focus-within) {
+        translate: 0 0;
+      }
+    }
+
+    @container page-container scroll-state(not (scrollable: top)) {
+      .page-header:not(:focus-within) {
         translate: 0 0;
       }
     }
