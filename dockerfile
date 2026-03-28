@@ -5,4 +5,4 @@ RUN npm install
 COPY . .
 RUN npm run build
 RUN npm prune --omit=dev
-CMD ["node", "dist/fullstackpro-front/server/server.mjs"]
+CMD ["node", "dist/novagenda-front/server/server.mjs"]
