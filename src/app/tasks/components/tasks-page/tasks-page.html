@@ -7,15 +7,13 @@
       Novagenda
     </mat-toolbar>
   </div>
-  <div class="page-body grow relative @container flex flex-col min-h-full">
-    <main class="p-4 grow @3xl:ms-(--bottom-nav-height)">
+  <div class="page-body grow relative flex flex-col min-h-full">
+    <main class="p-4 grow">
       <router-outlet></router-outlet>
     </main>
-    <div
-      class="tabs-wrapper sticky bottom-0 z-10 @3xl:top-0 @3xl:left-0 @3xl:absolute @3xl:h-full transition-[translate]"
-    >
+    <div class="tabs-wrapper sticky bottom-0 z-10 transition-[translate]">
       <adaptative-tabs
-        class="@3xl:top-(--mat-toolbar-standard-height) @3xl:sticky h-fit"
+        class="h-fit"
         [tabs]="[
           { text: 'Lista', url: 'list', icon: 'list-alt' },
           { text: 'Hoy', url: 'today', icon: 'today' },

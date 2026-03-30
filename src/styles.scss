@@ -1,65 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 @use '@angular/material' as mat;
-
-:root {
-  color-scheme: light dark;
-  @include mat.theme(
-    (
-      color: mat.$blue-palette,
-      typography: 'Google Sans',
-      density: 0,
-    )
-  );
-
-  @include mat.card-overrides(
-    (
-      elevated-container-color: var(--mat-sys-surface-container-lowest),
-      outlined-container-color: var(--mat-sys-surface-container-lowest),
-    )
-  );
-
-  @include mat.sidenav-overrides(
-    (
-      content-background-color: var(--color-gray-50),
-      container-shape: var(--mat-sys-corner-none),
-    )
-  );
-
-  @include mat.button-overrides(
-    (
-      filled-container-shape: var(--mat-sys-corner-small),
-    )
-  );
-
-  @include mat.fab-overrides(
-    (
-      container-color: var(--mat-sys-primary),
-      foreground-color: var(--mat-sys-on-primary),
-      container-shape: var(--mat-sys-corner-full),
-    )
-  );
-
-  @include mat.expansion-overrides(
-    (
-      container-background-color: var(--mat-sys-surface-container-lowest),
-    )
-  );
-
-  --mat-toolbar-standard-height: calc(
-    56px + env(safe-area-inset-top)
-  ); /* Misma altura que en móvil*/
-  --mat-form-field-filled-container-color: var(--mat-sys-surface-container);
-  --bottom-nav-height: calc(4.5rem + env(safe-area-inset-left));
-}
-
-html {
-  font-family:
-    'Google Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-    'Segoe UI Symbol', 'Noto Color Emoji';
-  container-type: scroll-state; /* Para gestionar el estado del scroll internamente */
-  container-name: page-container;
-}
+@use 'material-theme';
 
 a {
   color: var(--mat-sys-primary);
@@ -116,8 +58,41 @@ mat-card.task-card {
   }
 }
 
+.page-body {
+  container-name: page-body;
+  container-type: inline-size;
+}
+
+@media (min-height: 500px) {
+  @container page-body (min-width: 768px) {
+    main {
+      margin-inline-start: var(--bottom-nav-height);
+    }
+
+    .tabs-wrapper {
+      bottom: auto;
+      top: 0;
+      left: 0;
+      height: 100%;
+      position: absolute;
+
+      adaptative-tabs {
+        flex-direction: column;
+        justify-content: start;
+        border-top: 0;
+        border-right: 1px;
+        padding-bottom: 0;
+        height: auto;
+        width: var(--bottom-nav-height);
+        top: var(--mat-toolbar-standard-height);
+        position: sticky;
+      }
+    }
+  }
+}
+
 @supports (container-type: scroll-state) {
-  @media (max-width: 768px), (max-height: 500px) {
+  @media (max-width: 768px) and (min-height: 500px), (max-height: 500px) {
     /*Pantallas pequeñas*/
     @container page-container scroll-state(scrolled: bottom) {
       .page-header:not(:focus-within) {
