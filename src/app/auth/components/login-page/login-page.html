@@ -57,7 +57,9 @@
     </div>
 
     <div class="row col-2 offset-sm-2">
+      @defer {
       <div googleLogin class="w-full" (login)="loggedGoogle($event)"></div>
+      }
     </div>
 
     <p class="mt-6 text-lg text-(--mat-sys-secondary)">
