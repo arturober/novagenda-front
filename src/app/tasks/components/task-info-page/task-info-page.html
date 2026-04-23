@@ -1,0 +1,144 @@
+@if (task(); as task) {
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>{{ task.title }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      @if (task.description) {
+        <p class="pt-2">{{ task.description }}</p>
+      }
+    </mat-card-content>
+    <mat-card-content class="flex! items-center gap-2 mt-2 text-" [class]="statusColorClass()">
+      @if (!task.isActive) {
+        <mat-icon svgIcon="check"></mat-icon>
+        Tarea completada
+      } @else if (pending()) {
+        <mat-icon svgIcon="avg-pace"></mat-icon>
+        Tarea pendiente
+      } @else {
+        <mat-icon svgIcon="schedule"></mat-icon>
+        Tarea vencida
+      }
+    </mat-card-content>
+    <mat-card-actions>
+      @if (task.isActive) {
+        <button matButton>
+          <mat-icon svgIcon="check"></mat-icon>
+          Finalizar
+        </button>
+      } @else {
+        <button matButton>
+          <mat-icon svgIcon="avg-pace"></mat-icon>
+          Pendiente
+        </button>
+      }
+      <button matButton>
+        <mat-icon svgIcon="edit"></mat-icon>
+        Editar
+      </button>
+      <button matButton>
+        <mat-icon svgIcon="delete"></mat-icon>
+        Borrar
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mt-4">
+    <mat-list>
+      <mat-list-item>
+        <mat-icon matListItemIcon svgIcon="category" class="relative top-3"></mat-icon>
+        <div
+          class="text-xs! uppercase"
+          matListItemTitle
+          [style.--mat-sys-on-surface]="'light-dark(#666, #AAA)'"
+        >
+          Categoría
+        </div>
+        @if (task.category) {
+          <div matListItemLine>
+            <span
+              class="rounded-md px-2 py-0.5 text-xs"
+              [style]="{ color: task.category.color, backgroundColor: task.category.bgColor }"
+              >{{ task.category.name }}</span
+            >
+          </div>
+        } @else {
+          <div matListItemLine>Sin categoría</div>
+        }
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon matListItemIcon svgIcon="flag" class="relative top-3"></mat-icon>
+        <div
+          class="text-xs! uppercase"
+          matListItemTitle
+          [style.--mat-sys-on-surface]="'light-dark(#666, #AAA)'"
+        >
+          Prioridad
+        </div>
+        <div matListItemLine>
+          <span [class]="priorityColorClass()">{{ priorityLabel() }}</span>
+        </div>
+      </mat-list-item>
+      @if (task.startDate) {
+        <mat-list-item>
+          <mat-icon matListItemIcon svgIcon="today" class="relative top-3"></mat-icon>
+          <div
+            class="text-xs! uppercase"
+            matListItemTitle
+            [style.--mat-sys-on-surface]="'light-dark(#666, #AAA)'"
+          >
+            {{ task.endDate ? 'Fecha Inicio' : 'Fecha' }}
+          </div>
+          <div matListItemLine>
+            {{ task.startDate | dateIntl: 'es-ES' : 'full' }}
+          </div>
+        </mat-list-item>
+      }
+      @if (task.endDate) {
+        <mat-list-item>
+          <mat-icon matListItemIcon svgIcon="today" class="relative top-3"></mat-icon>
+          <div
+            class="text-xs! uppercase"
+            matListItemTitle
+            [style.--mat-sys-on-surface]="'light-dark(#666, #AAA)'"
+          >
+            Fecha fin
+          </div>
+          <div matListItemLine>
+            {{ task.endDate | dateIntl: 'es-ES' : 'full' }}
+          </div>
+        </mat-list-item>
+      }
+      @if (task.startTime) {
+        <mat-list-item>
+          <mat-icon matListItemIcon svgIcon="schedule" class="relative top-3"></mat-icon>
+          <div
+            class="text-xs! uppercase"
+            matListItemTitle
+            [style.--mat-sys-on-surface]="'light-dark(#666, #AAA)'"
+          >
+            Hora
+          </div>
+          <div matListItemLine>
+            {{ task.startTime | timeIntl: 'es-ES' }}
+          </div>
+        </mat-list-item>
+      }
+      @if (task.rrule) {
+        <mat-list-item>
+          <mat-icon matListItemIcon svgIcon="repeat" class="relative top-3"></mat-icon>
+          <div
+            class="text-xs! uppercase"
+            matListItemTitle
+            [style.--mat-sys-on-surface]="'light-dark(#666, #AAA)'"
+          >
+            Repetición
+          </div>
+          <div matListItemLine>
+            {{ frequency() }}
+          </div>
+        </mat-list-item>
+      }
+    </mat-list>
+  </mat-card>
+}

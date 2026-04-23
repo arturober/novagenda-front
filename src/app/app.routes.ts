@@ -14,6 +14,11 @@ export const routes: Routes = [
     canActivate: [loginActivateGuard]
   },
   {
+    path: 'categories',
+    loadChildren: () => import('./categories/categories.routes').then(m => m.categoriesRoutes),
+    canActivate: [loginActivateGuard]
+  },
+  {
     path: '',
     redirectTo: '/auth/login',
     pathMatch: 'full'

@@ -1,1 +1,12 @@
-<p>top-bar works!</p>
+<mat-toolbar>
+  @if (!backUrl()) {
+    <button matIconButton="tonal" (click)="openMenu()" class="xl:hidden!">
+      <mat-icon aria-hidden="false" aria-label="Abrir menú lateral" svgIcon="menu"></mat-icon>
+    </button>
+  } @else {
+    <button matIconButton="tonal" (click)="goBack()" class="xl:hidden!">
+      <mat-icon aria-hidden="false" aria-label="Volver atrás" svgIcon="arrow-back"></mat-icon>
+    </button>
+  }
+  <span class="ps-2">{{ title() }}</span>
+</mat-toolbar>

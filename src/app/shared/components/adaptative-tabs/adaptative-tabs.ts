@@ -15,7 +15,7 @@ export interface NavigationTab {
   templateUrl: './adaptative-tabs.html',
   styleUrls: ['./adaptative-tabs.css'],
   host: {
-    class: "flex justify-around items-center border-t border-gray-100 dark:border-gray-800 backdrop-blur-3xl"
+    class: "flex justify-around items-center border-t border-gray-100 dark:border-gray-800 backdrop-blur-3xl transition-[width]"
   }
 })
 export class AdaptativeTabs {

@@ -1,0 +1,20 @@
+<div class="min-h-screen flex flex-col">
+  <top-bar [title]="task()?.title ?? ''" backUrl="/tasks"></top-bar>
+  <div class="page-body grow relative flex flex-col items-center min-h-full">
+    <main class="p-4 grow w-xl max-w-full">
+      <router-outlet></router-outlet>
+    </main>
+    <div class="tabs-wrapper sticky bottom-0 z-10 transition-[translate]">
+      <adaptative-tabs
+        class="h-fit"
+        [tabs]="[
+          { text: 'Información', url: 'info', icon: 'info' },
+          { text: 'Colaboradores', url: 'colab', icon: 'group' },
+          { text: 'Subtareas', url: 'subtasks', icon: 'check-box' },
+          { text: 'Comentarios', url: 'comments', icon: 'chat' },
+        ]"
+      >
+      </adaptative-tabs>
+    </div>
+  </div>
+</div>

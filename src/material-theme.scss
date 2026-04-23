@@ -39,6 +39,7 @@
   @include mat.button-overrides(
     (
       filled-container-shape: var(--mat-sys-corner-small),
+      outlined-container-shape: var(--mat-sys-corner-small),
     )
   );
 
@@ -55,6 +56,8 @@
       container-background-color: var(--mat-sys-surface-container-lowest),
     )
   );
+
+  interpolate-size: allow-keywords;
 }
 
 @media (prefers-color-scheme: light) {

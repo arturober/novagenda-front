@@ -1,2 +1,19 @@
 @import "tailwindcss";
 @source "**/*.scss";
+@source "../tailwind.safelist.txt";
+
+@utility option-text-green {
+  span.mdc-list-item__primary-text {
+    @apply text-green-800! dark:text-green-50!;
+  }
+}
+@utility option-text-red {
+  span.mdc-list-item__primary-text {
+    @apply text-red-800! dark:text-red-50!;
+  }
+}
+@utility option-text-yellow {
+  span.mdc-list-item__primary-text {
+    @apply text-yellow-800! dark:text-yellow-50!;
+  }
+}

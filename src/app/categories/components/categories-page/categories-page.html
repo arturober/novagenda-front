@@ -1,0 +1,60 @@
+<div class="min-h-screen flex flex-col">
+  <top-bar title="Categorías"></top-bar>
+  <main class="page-body grow min-h-full p-4 flex flex-col items-center">
+    <div class="w-xl max-w-full">
+      <mat-card appearance="outlined" class="p-4">
+        <mat-list>
+          <h3 class="text-lg flex gap-2 items-center">
+            <mat-icon svgIcon="category"></mat-icon>
+            Categorías
+          </h3>
+          @for (category of categories(); track category.id) {
+            <mat-list-item style="height: auto" class="my-2">
+              <span matListItemTitle>
+                <mat-icon
+                  class="me-2 relative top-1.5 drop-shadow p-0"
+                  [style.color]="category.bgColor"
+                  svgIcon="circle_filled"
+                ></mat-icon>
+                <span>{{ category.name }}</span></span
+              >
+              @if (category.description) {
+                <span matListItemLine style="white-space: wrap" class="pt-2">{{
+                  category.description
+                }}</span>
+              }
+              <div matListItemMeta>
+                <button
+                  matIconButton
+                  [matMenuTriggerFor]="optionsMenu"
+                  [matMenuTriggerData]="{ id: category.id, taskcount: category.taskCount }"
+                  aria-label="Opciones para la categoría"
+                  class="mt-2"
+                >
+                  <mat-icon svgIcon="more-vert"></mat-icon>
+                </button>
+              </div>
+            </mat-list-item>
+            @if (!$last) {
+              <mat-divider></mat-divider>
+            }
+          }
+        </mat-list>
+        <button matButton="outlined" class="w-full" (click)="openNewCategoryDialog()">
+          Añadir Categoría
+        </button>
+      </mat-card>
+    </div>
+  </main>
+</div>
+
+<mat-menu #optionsMenu="matMenu">
+  <ng-template matMenuContent let-id="id" let-taskcount="taskcount">
+    <button mat-menu-item>
+      <mat-icon svgIcon="checklist"></mat-icon>
+      <span [matBadge]="taskcount" class="pe-5">Ver tareas</span>
+    </button>
+    <button mat-menu-item><mat-icon svgIcon="edit"></mat-icon><span>Editar</span></button>
+    <button mat-menu-item><mat-icon svgIcon="delete"></mat-icon><span>Eliminar</span></button>
+  </ng-template>
+</mat-menu>

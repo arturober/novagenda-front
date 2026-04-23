@@ -9,10 +9,11 @@
     [routerLinkActiveOptions]="{ exact: true }"
     class="h-full w-full flex flex-col justify-center items-center text-sm @3xl:py-2"
   >
-    <mat-icon aria-hidden="false" aria-label="Example home icon" [svgIcon]="tab.icon"></mat-icon>
-    {{ tab.text }}
+    <mat-icon class="shrink-0" aria-hidden="false" aria-label="Example home icon" [svgIcon]="tab.icon"></mat-icon>
+    <span class="icon-text">{{ tab.text }}</span>
   </a>
 }
-<div class="h-full w-full flex flex-col justify-center items-center @3xl:py-2">
+
+<div class="h-full w-full flex flex-col self-start justify-center items-center @3xl:py-2 empty:hidden">
   <ng-content></ng-content>
 </div>

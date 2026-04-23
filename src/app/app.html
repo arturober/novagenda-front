@@ -22,15 +22,33 @@
       }
     </mat-list>
     <mat-nav-list>
-      <!-- <a
-        mat-list-item
-        [activated]="activeLink === link"
-        href="#{{ link }}"
-        (click)="$event.preventDefault(); activeLink = link"
-      >
-        <mat-icon matListItemIcon>folder</mat-icon>
-        <span matListItemTitle>{{ link | titlecase }}</span>
-      </a> -->
+        <a
+          mat-list-item
+          [routerLink]="['/tasks']"
+          [activated]="currentUrl().startsWith('/tasks') && currentUrl() !== '/tasks/add'"
+          (click)="sideMenuService.open.set(false)"
+        >
+          <mat-icon matListItemIcon svgIcon="checklist"></mat-icon>
+          <span matListItemTitle>Mis Tareas</span>
+        </a>
+        <a
+          mat-list-item
+          [routerLink]="['/tasks', 'add']"
+          [activated]="currentUrl() === '/tasks/add'"
+          (click)="sideMenuService.open.set(false)"
+        >
+          <mat-icon matListItemIcon svgIcon="add-task"></mat-icon>
+          <span matListItemTitle>Nueva Tarea</span>
+        </a>
+        <a
+          mat-list-item
+          [routerLink]="['/categories']"
+          [activated]="currentUrl() === '/categories'"
+          (click)="sideMenuService.open.set(false)"
+        >
+          <mat-icon matListItemIcon svgIcon="category"></mat-icon>
+          <span matListItemTitle>Categorías</span>
+        </a>
     </mat-nav-list>
     <mat-action-list>
       <button mat-list-item (click)="logout()">
