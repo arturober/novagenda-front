@@ -6,7 +6,7 @@
     </h3>
 
     @for (subtask of subtasks(); track subtask.id) {
-      <mat-list-option togglePosition="before" [(selected)]="subtask.completed" (click)="updateCompleted(subtask)">
+      <mat-list-option [value]="subtask" togglePosition="before" [(selected)]="subtask.completed" (click)="updateCompleted(subtask)">
         <button
             matListItemAvatar
             matIconButton
