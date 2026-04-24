@@ -1,6 +1,9 @@
-export interface Subtask {
-  id: string;
+export interface SubtaskInsert {
   description: string;
+}
+
+export interface Subtask extends SubtaskInsert {
+  id: string;
   completed: boolean;
 }
 
