@@ -4,14 +4,18 @@ import { catchError, map, Observable, of, tap } from 'rxjs';
 import { SingleUserResponse, TokenResponse } from '../interfaces/responses';
 import { isPlatformBrowser } from '@angular/common';
 import { UserLogin, UserRegister } from '../interfaces/user';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   #http = inject(HttpClient);
+  #router = inject(Router);
 
   #logged = signal(false);
+  redirectAfterLogin = signal('/tasks');
+
   #platformId = inject(PLATFORM_ID);
 
   #loggedUserResource = httpResource<SingleUserResponse>(() => this.#logged() ? 'users/profile/mine' : undefined);
@@ -99,5 +103,10 @@ export class AuthService {
       }),
       catchError(() => of(false)),
     );
+  }
+
+  navigateAfterLogin() {
+    this.#router.navigateByUrl(this.redirectAfterLogin());
+    this.redirectAfterLogin.set('/tasks');
   }
 }

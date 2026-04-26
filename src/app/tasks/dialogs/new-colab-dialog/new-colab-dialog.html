@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>Crear invitación</h2>
+<mat-dialog-content class="overflow-hidden!">
+  @if (invitation(); as invitation) {
+    <p>Enlace de invitación</p>
+    <mat-form-field class="w-full pt-2" appearance="outline">
+      <input type="text" readonly matInput [value]="url()" />
+    </mat-form-field>
+    @if (isUserRegistered()) {
+      <p>
+        El usuario ya está registrado en la aplicación, por lo que recibirá una notificación
+        automática. En cualquier caso, también puede gestionar la invitación compartiendole el
+        enlace de arriba.
+      </p>
+    }
+  } @else {
+    <mat-radio-group [formField]="userTypeField">
+      <div>
+        <mat-radio-button value="email">A un usuario</mat-radio-button>
+      </div>
+      <mat-form-field class="pt-2 w-full" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput placeholder="pepe@email.com" [formField]="emailField" />
+      </mat-form-field>
+      <div>
+        <mat-radio-button value="all">A cualquiera</mat-radio-button>
+      </div>
+    </mat-radio-group>
+  }
+</mat-dialog-content>
+<mat-dialog-actions>
+  @if (invitation(); as invitation) {
+    <button matButton mat-dialog-close>Cerrar</button>
+    <button matButton (click)="copyUrl()">Copiar enlace</button>
+  } @else {
+    <button matButton mat-dialog-close>Cancelar</button>
+    <button
+      matButton
+      [disabled]="userType() === 'email' && emailField().invalid()"
+      (click)="createInvitation()"
+    >
+      Crear invitación
+    </button>
+  }
+</mat-dialog-actions>

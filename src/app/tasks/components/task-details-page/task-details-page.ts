@@ -15,5 +15,6 @@ export class TaskDetailsPage {
 
   readonly #taskService = inject(TaskService);
   taskResource = this.#taskService.getTaskResource(this.id);
-  task = computed(() => this.taskResource.hasValue() ? this.taskResource.value().task : null);
+  task = computed(() => (this.taskResource.hasValue() ? this.taskResource.value().task : null));
+  mine = computed(() => (this.taskResource.hasValue() ? this.taskResource.value().mine : false));
 }

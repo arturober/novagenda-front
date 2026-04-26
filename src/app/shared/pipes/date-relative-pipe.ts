@@ -8,7 +8,7 @@ import { DayjsService } from '../services/dayjs-service';
 export class DateRelativePipe implements PipeTransform {
   readonly #dayjsService = inject(DayjsService);
 
-  transform(value: string | Date): string {
+  transform(value: string): string {
     return this.#dayjsService.dateToRelative(value);
   }
 }

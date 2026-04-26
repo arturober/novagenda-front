@@ -43,6 +43,7 @@ export class IconService {
     'pending',
     'check',
     'avg-pace',
+    'send',
   ];
 
   public registerIcons(): void {

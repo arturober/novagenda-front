@@ -1,11 +1,45 @@
 <mat-accordion multi>
-  <mat-expansion-panel [(expanded)]="pendingExpanded">
+  <mat-expansion-panel [(expanded)]="pendingNoDateExpanded">
     <mat-expansion-panel-header>
-      <mat-panel-title> Pendientes </mat-panel-title>
+      <mat-panel-title> Pendientes sin fecha ({{taskNoDate().length}}) </mat-panel-title>
     </mat-expansion-panel-header>
 
     <div class="grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-2">
-      @for (task of tasks(); track task.id) {
+      @for (task of taskNoDate(); track task.id) {
+        <task-item [task]="task"></task-item>
+      }
+    </div>
+  </mat-expansion-panel>
+  <mat-expansion-panel [(expanded)]="pendingDateExpanded">
+    <mat-expansion-panel-header>
+      <mat-panel-title> Próximas tareas ({{taskDate().length}}) </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-2">
+      @for (task of taskDate(); track task.id) {
+        <task-item [task]="task"></task-item>
+      }
+    </div>
+  </mat-expansion-panel>
+  <mat-expansion-panel [(expanded)]="overdueExpanded" class="overdue-tasks">
+    <mat-expansion-panel-header>
+      <mat-panel-title> Vencidas {{loadOverdue() ? `(${tasksOverdue().length})` : ''}} </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-2">
+      @for (task of tasksOverdue(); track task.id) {
+        <task-item [task]="task"></task-item>
+      }
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [(expanded)]="completedExpanded" class="completed-tasks">
+    <mat-expansion-panel-header>
+      <mat-panel-title> Completadas {{loadCompleted() ? `(${tasksCompleted().length})` : ''}} </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-2">
+      @for (task of tasksCompleted(); track task.id) {
         <task-item [task]="task"></task-item>
       }
     </div>

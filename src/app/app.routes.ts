@@ -19,6 +19,11 @@ export const routes: Routes = [
     canActivate: [loginActivateGuard]
   },
   {
+    path: 'invitations',
+    loadChildren: () => import('./invitations/invitations.routes').then(m => m.invitationsRoutes),
+    canActivate: [loginActivateGuard]
+  },
+  {
     path: '',
     redirectTo: '/auth/login',
     pathMatch: 'full'

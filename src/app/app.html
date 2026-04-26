@@ -11,6 +11,7 @@
     [fixedInViewport]="true"
     [opened]="sideMenuOpen() && logged()"
     (openedChange)="this.sideMenuService.open.set($event)"
+    [autoFocus]="false"
   >
     <mat-list>
       @if (user(); as user) {
@@ -48,6 +49,15 @@
         >
           <mat-icon matListItemIcon svgIcon="category"></mat-icon>
           <span matListItemTitle>Categorías</span>
+        </a>
+        <a
+          mat-list-item
+          [routerLink]="['/invitations']"
+          [activated]="currentUrl() === '/invitations'"
+          (click)="sideMenuService.open.set(false)"
+        >
+          <mat-icon matListItemIcon svgIcon="group" [matBadge]="invitations()"></mat-icon>
+          <span matListItemTitle>Invitaciones</span>
         </a>
     </mat-nav-list>
     <mat-action-list>

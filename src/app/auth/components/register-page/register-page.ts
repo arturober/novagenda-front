@@ -145,7 +145,7 @@ export class RegisterPage {
       .loginGoogle(resp.credential)
       .pipe(takeUntilDestroyed(this.#destroyRef))
       .subscribe({
-        next: () => this.#router.navigate(['/tasks']),
+        next: () => this.#authService.navigateAfterLogin(),
         error: (err) => {
           this.#snackBar.open(err.error.message ?? err.error.error, 'Cerrar', {
             duration: 3000,

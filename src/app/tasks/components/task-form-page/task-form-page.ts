@@ -43,6 +43,7 @@ import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autoc
 import { Category } from '../../../categories/interfaces/category';
 import { MatDialog } from '@angular/material/dialog';
 import { NewCategoryDialog } from '../../../categories/dialogs/new-category-dialog/new-category-dialog';
+import { MatCard } from '@angular/material/card';
 
 interface TaskModel {
   title: string;
@@ -87,6 +88,7 @@ interface TaskModel {
     MatAutocomplete,
     MatAutocompleteTrigger,
     MatIconButton,
+    MatCard
   ],
   templateUrl: './task-form-page.html',
   styleUrl: './task-form-page.scss',

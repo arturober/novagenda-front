@@ -8,10 +8,13 @@ import {
   MatListItemAvatar,
   MatListItemLine,
   MatListItemMeta,
-  MatListItemTitle
+  MatListItemTitle,
 } from '@angular/material/list';
 import { CollaborationRole } from '../../interfaces/collaborator';
 import { TaskService } from '../../services/task-service';
+import { TaskDetailsPage } from '../task-details-page/task-details-page';
+import { MatDialog } from '@angular/material/dialog';
+import { NewColabDialog } from '../../dialogs/new-colab-dialog/new-colab-dialog';
 
 @Component({
   selector: 'task-colab-page',
@@ -33,12 +36,15 @@ import { TaskService } from '../../services/task-service';
 export class TaskColabPage {
   id = input.required<string>();
 
+  readonly #taskDetailsPage = inject(TaskDetailsPage);
   readonly #taskService = inject(TaskService);
+  readonly #dialog = inject(MatDialog);
 
   collaboratorsResource = this.#taskService.getCollaboratorsResource(this.id);
   collaborators = linkedSignal(() =>
     this.collaboratorsResource.hasValue() ? this.collaboratorsResource.value().collaborators : [],
   );
+  mine = this.#taskDetailsPage.mine;
 
   getRoleName(role: CollaborationRole) {
     switch (role) {
@@ -56,6 +62,9 @@ export class TaskColabPage {
   }
 
   openNewCategoryDialog() {
-    //...
+    const newTaskDialog = this.#dialog.open(NewColabDialog, { data: this.id() });
+    newTaskDialog.afterClosed().subscribe(() => {
+      this.collaboratorsResource.reload();
+    });
   }
 }

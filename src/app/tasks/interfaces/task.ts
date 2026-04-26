@@ -26,4 +26,5 @@ export interface TaskListResponse {
 
 export interface SingleTaskResponse {
   task: Task;
+  mine: boolean;
 }

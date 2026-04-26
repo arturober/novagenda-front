@@ -1,12 +1,5 @@
 import { MediaMatcher } from '@angular/cdk/layout';
-import {
-  Component,
-  computed,
-  DestroyRef,
-  inject,
-  linkedSignal,
-  signal
-} from '@angular/core';
+import { Component, computed, DestroyRef, inject, linkedSignal, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatIcon } from '@angular/material/icon';
 import {
@@ -23,6 +16,7 @@ import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/mat
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from './auth/services/auth-service';
 import { SideMenuService } from './shared/services/side-menu-service';
+import { MatBadge } from '@angular/material/badge';
 
 interface MenuOpenValues {
   menuOpen: boolean;
@@ -51,6 +45,7 @@ interface MenuLink {
     MatIcon,
     MatListItemIcon,
     MatActionList,
+    MatBadge,
     RouterLink,
   ],
   templateUrl: './app.html',
@@ -82,6 +77,11 @@ export class App {
     this.#authService.loggedUserResource.hasValue()
       ? this.#authService.loggedUserResource.value().user
       : null,
+  );
+  invitations = computed(() =>
+    this.#authService.loggedUserResource.hasValue()
+      ? this.#authService.loggedUserResource.value().pendingInvitations
+      : 0,
   );
 
   currentUrl = computed(() => this.#router.lastSuccessfulNavigation()?.finalUrl?.toString() ?? '');

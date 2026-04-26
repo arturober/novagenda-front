@@ -1,158 +1,162 @@
 <div class="min-h-screen flex flex-col">
   <top-bar title="Nueva Tarea"></top-bar>
   <main class="page-body grow min-h-full p-4 flex flex-col items-center">
-    <form [formRoot]="taskForm" class="w-xl max-w-full">
-      <div class="mb-2">
-        <mat-form-field class="w-full max-w-xl pt-2" appearance="outline">
-          <mat-label>Título</mat-label>
-          <input
-            type="text"
-            matInput
-            [formField]="taskForm.title"
-            placeholder="Qué necesitas hacer"
-          />
-          @let titleErrors = taskForm.title().errors();
-          @for (error of titleErrors; track $index) {
-            <mat-error>{{ error.message }}</mat-error>
-          }
-        </mat-form-field>
-      </div>
-      <div class="mb-2">
-        <mat-form-field class="w-full max-w-xl pt-2" appearance="outline">
-          <mat-label>Descripción</mat-label>
-          <textarea
-            type="text"
-            matInput
-            [formField]="taskForm.description"
-            placeholder="Más detalles"
-            rows="3"
-          ></textarea>
-        </mat-form-field>
-      </div>
-      <div class="mb-2">
-        <mat-form-field class="w-full max-w-xl pt-2" appearance="outline" floatLabel="always">
-          <mat-label>Categoría</mat-label>
-          <input
-            type="text"
-            matInput
-            [formField]="taskForm.category"
-            [matAutocomplete]="auto"
-            placeholder="Sin categoría"
-            #categoryInput
-            (input)="filterCategories(categoryInput)"
-            (focus)="filterCategories(categoryInput)"
-          />
-          <button matIconButton matIconSuffix (click)="openNewCategoryDialog($event)">
-            <mat-icon svgIcon="add"></mat-icon>
-          </button>
-
-          <mat-autocomplete
-            requireSelection
-            #auto="matAutocomplete"
-            [displayWith]="getCategoryName"
-          >
-            @for (category of filteredCategories(); track category.id) {
-              <mat-option [value]="category">
-                <mat-icon
-                  class="drop-shadow"
-                  [style.color]="category.bgColor"
-                  svgIcon="circle_filled"
-                ></mat-icon>
-                <span
-                  >{{ category.name }}</span
-                ></mat-option
-              >
-            }
-          </mat-autocomplete>
-        </mat-form-field>
-      </div>
-      <div class="mb-2">
-        <mat-form-field class="w-full max-w-xl pt-2" appearance="outline">
-          <mat-label>Prioridad</mat-label>
-          <mat-select [formField]="taskForm.priority" panelClass="p-0!">
-            <mat-select-trigger
-              ><span [class]="priorityColorClass()">{{ priorityLabel() }}</span></mat-select-trigger
-            >
-            <mat-option value="LOW" class="bg-green-50! dark:bg-green-800! option-text-green"
-              >Baja</mat-option
-            >
-            <mat-option value="MEDIUM" class="bg-yellow-50! dark:bg-yellow-800! option-text-yellow"
-              >Media</mat-option
-            >
-            <mat-option value="HIGH" class="bg-red-50! dark:bg-red-800! option-text-red"
-              >Alta</mat-option
-            >
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="mb-2">
-        <mat-slide-toggle (change)="isDateRange.set($event.checked)" [checked]="isDateRange()"
-          >Rango de fechas</mat-slide-toggle
-        >
-      </div>
-      @if (!isDateRange()) {
+    <mat-card class="w-3xl max-w-full p-4">
+      <form [formRoot]="taskForm" class="w-full">
         <div class="mb-2">
-          <mat-form-field class="w-full max-w-xl pt-4" appearance="outline">
-            <mat-label>Fecha</mat-label>
+          <mat-form-field class="w-full pt-2" appearance="outline">
+            <mat-label>Título</mat-label>
             <input
+              type="text"
               matInput
-              [matDatepicker]="startDate"
-              [formField]="taskForm.startDate"
-              placeholder="dd/mm/aaaa"
+              [formField]="taskForm.title"
+              placeholder="Qué necesitas hacer"
             />
-            <mat-datepicker-toggle matIconSuffix [for]="startDate">
-              <mat-icon matDatepickerToggleIcon svgIcon="today"></mat-icon>
-            </mat-datepicker-toggle>
-            <mat-datepicker #startDate [touchUi]="isMobileOS"></mat-datepicker>
+            @let titleErrors = taskForm.title().errors();
+            @for (error of titleErrors; track $index) {
+              <mat-error>{{ error.message }}</mat-error>
+            }
           </mat-form-field>
         </div>
         <div class="mb-2">
-          <mat-slide-toggle (change)="isAllDay.set($event.checked)" [checked]="isAllDay()"
-            >Todo el día</mat-slide-toggle
-          >
+          <mat-form-field class="w-full pt-2" appearance="outline">
+            <mat-label>Descripción</mat-label>
+            <textarea
+              type="text"
+              matInput
+              [formField]="taskForm.description"
+              placeholder="Más detalles"
+              rows="3"
+            ></textarea>
+          </mat-form-field>
         </div>
-        @if (!isAllDay()) {
-          <div class="mb-2">
-            <mat-form-field class="w-full max-w-xl pt-2" appearance="outline">
-              <mat-label>Hora</mat-label>
-              <input matInput [matTimepicker]="time" [formField]="taskForm.startTime" />
-              <mat-timepicker-toggle matIconSuffix [for]="time" />
-              <mat-timepicker #time />
-            </mat-form-field>
-          </div>
-        }
         <div class="mb-2">
-          <mat-form-field class="w-full max-w-xl pt-4" appearance="outline" floatLabel="always">
-            <mat-label>Repetición</mat-label>
-            <mat-select [formField]="taskForm.rrule" placeholder="Solo una vez">
-              <mat-option [value]="null">Solo una vez</mat-option>
-              <mat-option value="FREQ=DAILY">Diariamente</mat-option>
-              <mat-option value="FREQ=WEEKLY">Semanalmente</mat-option>
-              <mat-option value="FREQ=MONTHLY">Mensualmente</mat-option>
-              <mat-option value="FREQ=YEARLY">Anualmente</mat-option>
+          <mat-form-field class="w-full pt-2" appearance="outline" floatLabel="always">
+            <mat-label>Categoría</mat-label>
+            <input
+              type="text"
+              matInput
+              [formField]="taskForm.category"
+              [matAutocomplete]="auto"
+              placeholder="Sin categoría"
+              #categoryInput
+              (input)="filterCategories(categoryInput)"
+              (focus)="filterCategories(categoryInput)"
+            />
+            <button matIconButton matIconSuffix (click)="openNewCategoryDialog($event)">
+              <mat-icon svgIcon="add"></mat-icon>
+            </button>
+
+            <mat-autocomplete
+              requireSelection
+              #auto="matAutocomplete"
+              [displayWith]="getCategoryName"
+            >
+              @for (category of filteredCategories(); track category.id) {
+                <mat-option [value]="category">
+                  <mat-icon
+                    class="drop-shadow"
+                    [style.color]="category.bgColor"
+                    svgIcon="circle_filled"
+                  ></mat-icon>
+                  <span>{{ category.name }}</span></mat-option
+                >
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="mb-2">
+          <mat-form-field class="w-full pt-2" appearance="outline">
+            <mat-label>Prioridad</mat-label>
+            <mat-select [formField]="taskForm.priority" panelClass="p-0!">
+              <mat-select-trigger
+                ><span [class]="priorityColorClass()">{{
+                  priorityLabel()
+                }}</span></mat-select-trigger
+              >
+              <mat-option value="LOW" class="bg-green-50! dark:bg-green-800! option-text-green"
+                >Baja</mat-option
+              >
+              <mat-option
+                value="MEDIUM"
+                class="bg-yellow-50! dark:bg-yellow-800! option-text-yellow"
+                >Media</mat-option
+              >
+              <mat-option value="HIGH" class="bg-red-50! dark:bg-red-800! option-text-red"
+                >Alta</mat-option
+              >
             </mat-select>
           </mat-form-field>
         </div>
-      } @else {
         <div class="mb-2">
-          <mat-form-field class="w-full max-w-xl pt-4" appearance="outline">
-            <mat-label>Fecha inicio - fin</mat-label>
-            <mat-date-range-input [rangePicker]="rangeDate">
-              <input matStartDate [formField]="taskForm.startDate" placeholder="dd/mm/aaaa" />
-              <input matEndDate [formField]="taskForm.endDate" placeholder="dd/mm/aaaa" />
-            </mat-date-range-input>
-            <mat-datepicker-toggle matIconSuffix [for]="rangeDate">
-              <mat-icon matDatepickerToggleIcon svgIcon="date-range"></mat-icon>
-            </mat-datepicker-toggle>
-            <mat-date-range-picker #rangeDate [touchUi]="isMobileOS"></mat-date-range-picker>
-          </mat-form-field>
+          <mat-slide-toggle (change)="isDateRange.set($event.checked)" [checked]="isDateRange()"
+            >Rango de fechas</mat-slide-toggle
+          >
         </div>
-      }
+        @if (!isDateRange()) {
+          <div class="mb-2">
+            <mat-form-field class="w-full pt-4" appearance="outline">
+              <mat-label>Fecha</mat-label>
+              <input
+                matInput
+                [matDatepicker]="startDate"
+                [formField]="taskForm.startDate"
+                placeholder="dd/mm/aaaa"
+              />
+              <mat-datepicker-toggle matIconSuffix [for]="startDate">
+                <mat-icon matDatepickerToggleIcon svgIcon="today"></mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #startDate [touchUi]="isMobileOS"></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="mb-2">
+            <mat-slide-toggle (change)="isAllDay.set($event.checked)" [checked]="isAllDay()"
+              >Todo el día</mat-slide-toggle
+            >
+          </div>
+          @if (!isAllDay()) {
+            <div class="mb-2">
+              <mat-form-field class="w-full pt-2" appearance="outline">
+                <mat-label>Hora</mat-label>
+                <input matInput [matTimepicker]="time" [formField]="taskForm.startTime" />
+                <mat-timepicker-toggle matIconSuffix [for]="time" />
+                <mat-timepicker #time />
+              </mat-form-field>
+            </div>
+          }
+          <div class="mb-2">
+            <mat-form-field class="w-full pt-4" appearance="outline" floatLabel="always">
+              <mat-label>Repetición</mat-label>
+              <mat-select [formField]="taskForm.rrule" placeholder="Solo una vez">
+                <mat-option [value]="null">Solo una vez</mat-option>
+                <mat-option value="FREQ=DAILY">Diariamente</mat-option>
+                <mat-option value="FREQ=WEEKLY">Semanalmente</mat-option>
+                <mat-option value="FREQ=MONTHLY">Mensualmente</mat-option>
+                <mat-option value="FREQ=YEARLY">Anualmente</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        } @else {
+          <div class="mb-2">
+            <mat-form-field class="w-full pt-4" appearance="outline">
+              <mat-label>Fecha inicio - fin</mat-label>
+              <mat-date-range-input [rangePicker]="rangeDate">
+                <input matStartDate [formField]="taskForm.startDate" placeholder="dd/mm/aaaa" />
+                <input matEndDate [formField]="taskForm.endDate" placeholder="dd/mm/aaaa" />
+              </mat-date-range-input>
+              <mat-datepicker-toggle matIconSuffix [for]="rangeDate">
+                <mat-icon matDatepickerToggleIcon svgIcon="date-range"></mat-icon>
+              </mat-datepicker-toggle>
+              <mat-date-range-picker #rangeDate [touchUi]="isMobileOS"></mat-date-range-picker>
+            </mat-form-field>
+          </div>
+        }
 
-      <button type="submit" matButton="filled" class="w-full" [disabled]="taskForm().invalid()">
-        Crear Tarea
-      </button>
-      <a matButton="outlined" class="w-full mt-4" [routerLink]="['/tasks']"> Cancelar </a>
-    </form>
+        <button type="submit" matButton="filled" class="w-full" [disabled]="taskForm().invalid()">
+          Crear Tarea
+        </button>
+        <a matButton="outlined" class="w-full mt-4" [routerLink]="['/tasks']"> Cancelar </a>
+      </form>
+    </mat-card>
   </main>
 </div>

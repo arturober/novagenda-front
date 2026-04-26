@@ -1,10 +1,9 @@
 <mat-card appearance="outlined" class="p-4">
+  <h3 class="text-lg flex gap-2 items-center">
+    <mat-icon svgIcon="group"></mat-icon>
+    Colaboradores
+  </h3>
   <mat-list>
-    <h3 class="text-lg flex gap-2 items-center">
-      <mat-icon svgIcon="group"></mat-icon>
-      Colaboradores
-    </h3>
-
     @for (colab of collaborators(); track colab.id) {
       <mat-list-item>
         <img matListItemAvatar [src]="colab.user.photo" alt="Foto del usuario" />
@@ -12,21 +11,25 @@
           {{ colab.user.name }}
         </div>
         <div matListItemLine>{{ getRoleName(colab.role) }}</div>
-        <div matListItemMeta>
-          <button
-            matIconButton
-            aria-label="Borrar colaborador"
-            class="mt-2"
-            (click)="deleteColab(colab.id)"
-          >
-            <mat-icon svgIcon="delete"></mat-icon>
-          </button>
-        </div>
+        @if (colab.role !== 'OWNER' && mine()) {
+          <div matListItemMeta>
+            <button
+              matIconButton
+              aria-label="Borrar colaborador"
+              class="mt-2"
+              (click)="deleteColab(colab.id)"
+            >
+              <mat-icon svgIcon="delete"></mat-icon>
+            </button>
+          </div>
+        }
       </mat-list-item>
     }
   </mat-list>
 
-<button matButton="outlined" class="w-full" (click)="openNewCategoryDialog()">
-  Añadir Colaborador
-</button>
+  @if (mine()) {
+    <button matButton="outlined" class="w-full" (click)="openNewCategoryDialog()">
+      Añadir Colaborador
+    </button>
+  }
 </mat-card>

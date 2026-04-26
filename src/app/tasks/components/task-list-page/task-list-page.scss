@@ -1,1 +1,13 @@
+@use '@angular/material' as mat;
 
+.overdue-tasks{
+  @include mat.expansion-overrides((
+    container-background-color: light-dark(var(--color-red-50), var(--color-red-950)),
+  ));
+}
+
+.completed-tasks{
+  @include mat.expansion-overrides((
+    container-background-color: light-dark(var(--color-green-50), var(--color-green-950)),
+  ));
+}

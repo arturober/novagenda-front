@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Invitación a colaborar</h2>
+<mat-dialog-content class="overflow-hidden!">
+  <p>
+    <strong>{{ invitation.inviter.name }}</strong> te ha invitado a colaborar en la tarea
+    <strong>{{ invitation.task.title }}</strong>
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton (click)="rejectInvitation()">Rechazar</button>
+  <button matButton (click)="acceptInvitation()">Aceptar</button>
+</mat-dialog-actions>

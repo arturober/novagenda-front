@@ -1,1 +1,20 @@
-<p>task-comments-page works!</p>
+<mat-card appearance="outlined" class="p-4">
+  <h3 class="text-lg flex gap-2 items-center">
+      <mat-icon svgIcon="chat"></mat-icon>
+      Comentarios
+  </h3>
+  <div class="relative">
+    <mat-form-field class="pt-2 w-full" appearance="outline">
+      <textarea type="text" matInput [formField]="newCommentForm.content" placeholder="Nuevo comentario..." class="resize-none! w-[stretch]! mr-6!" rows="3"></textarea>
+    </mat-form-field>
+    <button matIconButton class="send-comment absolute! bottom-5 right-1" [disabled]="newCommentForm().invalid()" (click)="insertComment()">
+      <mat-icon svgIcon="send"></mat-icon>
+    </button>
+  </div>
+
+  <div class="overflow-y-auto p-4 flex flex-col gap-2 scroll-smooth">
+    @for (comment of comments(); track comment.id) {
+      <chat-bubble [comment]="comment"></chat-bubble>
+    }
+  </div>
+</mat-card>
