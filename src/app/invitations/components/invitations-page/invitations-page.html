@@ -1,0 +1,27 @@
+<div class="min-h-screen flex flex-col">
+  <top-bar title="Invitaciones"></top-bar>
+  <main class="page-body grow min-h-full p-4 flex flex-col items-center">
+    <div class="w-3xl max-w-full">
+      <mat-card appearance="outlined" class="p-4">
+        <mat-action-list>
+          <h3 class="text-lg flex gap-2 items-center">
+            <mat-icon svgIcon="group"></mat-icon>
+            Invitaciones
+          </h3>
+          @for (invitation of invitations(); track invitation.id) {
+            <button
+              mat-list-item
+              (click)="openInvitationDialog(invitation)"
+            >
+                <strong>{{ invitation.inviter.name }}</strong> te ha invitado a colaborar en la
+                tarea <strong>{{ invitation.task.title }}</strong>
+            </button>
+            @if (!$last) {
+              <mat-divider></mat-divider>
+            }
+          }
+        </mat-action-list>
+      </mat-card>
+    </div>
+  </main>
+</div>

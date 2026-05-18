@@ -8,4 +8,5 @@ export interface TokenResponse {
 
 export interface SingleUserResponse {
   user: User;
+  pendingInvitations?: number;
 }

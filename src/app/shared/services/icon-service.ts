@@ -24,7 +24,26 @@ export class IconService {
     'today',
     'calendar-month',
     'list-alt',
-    'logout'
+    'logout',
+    'checklist',
+    'category',
+    'more-vert',
+    'edit',
+    'delete',
+    'circle_filled',
+    'calendar-today',
+    'schedule',
+    'repeat',
+    'chat',
+    'check-box',
+    'info',
+    'group',
+    'arrow-back',
+    'flag',
+    'pending',
+    'check',
+    'avg-pace',
+    'send',
   ];
 
   public registerIcons(): void {

@@ -1,102 +1,95 @@
-import { Component, signal } from '@angular/core';
-import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion';
-import { MatIcon } from '@angular/material/icon';
+import { Component, computed, effect, inject, linkedSignal, signal, untracked } from '@angular/core';
+import {
+  MatAccordion,
+  MatExpansionPanel,
+  MatExpansionPanelHeader,
+  MatExpansionPanelTitle,
+} from '@angular/material/expansion';
+import { TaskService } from '../../services/task-service';
 import { TaskItem } from '../task-item/task-item';
-import { Task } from '../../interfaces/task';
+import { TasksPage } from '../tasks-page/tasks-page';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Task, TaskListResponse } from '../../interfaces/task';
 
 @Component({
   selector: 'task-list-page',
-  imports: [TaskItem, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatIcon],
+  imports: [
+    TaskItem,
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle,
+  ],
   templateUrl: './task-list-page.html',
   styleUrl: './task-list-page.scss',
 })
 export class TaskListPage {
-  pendingExpanded = signal(true);
-  tasks = signal<Task[]>([
-    {
-      id: "1",
-      title: "Muchas tareas de ejemplo para probar el scroll en vista móvil",
-      priority: "LOW"
+  readonly #taskService = inject(TaskService);
+  readonly #tasksPage = inject(TasksPage);
+
+  pendingNoDateExpanded = signal(true);
+  pendingDateExpanded = signal(true);
+  overdueExpanded = signal(false);
+  completedExpanded = signal(false);
+
+  loadOverdue = signal(false);
+  overduePage = signal(1);
+  loadCompleted = signal(false);
+  completedPage = signal(1);
+
+  tasklistResource = this.#taskService.getTasksResource();
+  tasks = computed(() =>
+    this.tasklistResource.hasValue() ? this.tasklistResource.value().tasks : [],
+  );
+  taskNoDate = computed(() => this.tasks().filter((t) => t.startDate === null));
+  taskDate = computed(() => this.tasks().filter((t) => t.startDate !== null));
+
+  tasksOverdueResource = this.#taskService.getOverdueTasksResource(
+    this.loadOverdue,
+    this.overduePage,
+  );
+  tasksCompletedResource = this.#taskService.getCompletedTasksResource(
+    this.loadCompleted,
+    this.completedPage,
+  );
+
+  tasksOverdue = linkedSignal<TaskListResponse | undefined, Task[]>({
+    source: () => this.tasksOverdueResource?.value(),
+    computation: (resp, previous) => {
+      if (!resp) return previous?.value ?? [];
+      return this.overduePage() > 1 && previous ? previous.value.concat(resp!.tasks) : resp?.tasks;
     },
-    {
-      id: "2",
-      title: "Y ver que tal aparecen y desaparecen las barras al subir y bajar",
-      priority: "HIGH"
+  });
+
+  tasksCompleted = linkedSignal<TaskListResponse | undefined, Task[]>({
+    source: () => this.tasksCompletedResource?.value(),
+    computation: (resp, previous) => {
+      if (!resp) return previous?.value ?? [];
+      return this.overduePage() > 1 && previous ? previous.value.concat(resp!.tasks) : resp?.tasks;
     },
-    {
-      id: "3",
-      title: "Además de como se va adaptando el diseño al redimensionar todo",
-      priority: "MEDIUM"
-    },
-    {
-      id: "4",
-      title: "Pintar la casa",
-      priority: "LOW"
-    },
-    {
-      id: "5",
-      title: "Comprar entradas",
-      priority: "MEDIUM"
-    },
-    {
-      id: "6",
-      title: "Sacar al perro",
-      priority: "HIGH"
-    },
-    {
-      id: "7",
-      title: "Pintar la casa",
-      priority: "LOW"
-    },
-    {
-      id: "8",
-      title: "Pintar la casa",
-      priority: "LOW"
-    },
-    {
-      id: "9",
-      title: "Pintar la casa",
-      priority: "LOW"
-    },
-    {
-      id: "10",
-      title: "Pintar la casa",
-      priority: "LOW"
-    },
-    {
-      id: "11",
-      title: "Pintar la casa",
-      priority: "LOW"
-    },
-    {
-      id: "12",
-      title: "Pintar la casa",
-      priority: "LOW"
-    },
-    {
-      id: "13",
-      title: "Pintar la casa",
-      priority: "LOW"
-    },
-    {
-      id: "14",
-      title: "Pintar la casa",
-      priority: "LOW"
-    },
-    {
-      id: "15",
-      title: "Pintar la casa",
-      priority: "LOW"
-    },
-    {
-      id: "16",
-      title: "Pintar la casa",
-      priority: "LOW"
-    },
-    {
-      id: "17",
-      title: "Pintar la casa",
-      priority: "LOW"
-    },
-  ]);
+  });
+
+  constructor() {
+    this.#tasksPage.reloadTasksEvent$
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => this.tasklistResource.reload());
+
+    effect(() => {
+      const overdueExpanded = this.overdueExpanded();
+      untracked(() => {
+        if(overdueExpanded) {
+          this.loadOverdue.set(true);
+        }
+      });
+    });
+
+    effect(() => {
+      const completedExpanded = this.completedExpanded();
+      untracked(() => {
+        if(completedExpanded) {
+          this.loadCompleted.set(true);
+        }
+      });
+    });
+  }
 }

@@ -1,0 +1,22 @@
+:host {
+  display: contents;
+}
+
+.tail-base {
+  position: absolute;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-top: 16px solid transparent;
+  z-index: 0;
+}
+
+.tail-left {
+  left: -10px;
+  border-right: 16px solid;
+}
+
+.tail-right {
+  right: -10px;
+  border-left: 16px solid;
+}

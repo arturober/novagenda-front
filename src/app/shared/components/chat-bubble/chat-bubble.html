@@ -1,0 +1,13 @@
+<div class="flex gap-2 items-end" [class.flex-row-reverse]="comment().mine">
+  <img class="rounded-full object-cover object-center size-10" [src]="comment().author.photo" alt="Foto usuario" />
+  <div
+    [class]="containerClasses()"
+    class="relative max-w-[90%] py-2.5 rounded-2xl drop-shadow-md mb-4"
+  >
+    <p class="font-semibold px-4">{{comment().author.name}}</p>
+    <p class="leading-relaxed px-4">{{ comment().content }}</p>
+    <p class="pt-1 text-xs text-right px-4 text-(--mat-sys-on-surface-variant)">{{commentDate()}}</p>
+
+    <div [class]="tailClasses()"></div>
+  </div>
+</div>

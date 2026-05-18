@@ -1,12 +1,5 @@
 <div class="min-h-screen flex flex-col">
-  <div class="page-header sticky top-0 left-0 z-20 transition-[translate] bg-(--mat-sys-primary)">
-    <mat-toolbar>
-      <button matIconButton="tonal" (click)="openMenu()" class="xl:hidden!">
-        <mat-icon aria-hidden="false" aria-label="Side Menu Open" svgIcon="menu"></mat-icon>
-      </button>
-      Novagenda
-    </mat-toolbar>
-  </div>
+  <top-bar [title]="'Mis tareas'"></top-bar>
   <div class="page-body grow relative flex flex-col min-h-full">
     <main class="p-4 grow">
       <router-outlet></router-outlet>
@@ -15,13 +8,13 @@
       <adaptative-tabs
         class="h-fit"
         [tabs]="[
-          { text: 'Lista', url: 'list', icon: 'list-alt' },
+          { text: 'Todas', url: 'list', icon: 'list-alt' },
           { text: 'Hoy', url: 'today', icon: 'today' },
           { text: 'Semana', url: 'week', icon: 'date-range' },
           { text: 'Mes', url: 'month', icon: 'calendar-month' },
         ]"
       >
-        <button matFab aria-label="Añadir tarea">
+        <button matFab aria-label="Añadir tarea" (click)="openNewTaskDialog()">
           <mat-icon svgIcon="add"></mat-icon>
         </button>
       </adaptative-tabs>

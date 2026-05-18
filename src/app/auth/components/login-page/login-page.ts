@@ -13,7 +13,7 @@ import {
   MatSuffix,
 } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { GoogleLogin } from '../../google-login/google-login';
 import { AuthService } from '../../services/auth-service';
 
@@ -53,7 +53,6 @@ interface LoginModel {
 export class LoginPage {
   #authService = inject(AuthService);
   #destroyRef = inject(DestroyRef);
-  #router = inject(Router);
   #snackBar = inject(MatSnackBar);
 
   loginModel = signal<LoginModel>({
@@ -75,7 +74,7 @@ export class LoginPage {
             .login(this.loginModel())
             .pipe(takeUntilDestroyed(this.#destroyRef))
             .subscribe({
-              next: () => this.#router.navigate(['/tasks']),
+              next: () => this.#authService.navigateAfterLogin(),
               error: (err) => {
                 this.#snackBar.open(err.error.message ?? err.error.error, 'Cerrar', {
                   duration: 3000,
@@ -95,7 +94,7 @@ export class LoginPage {
       .loginGoogle(resp.credential)
       .pipe(takeUntilDestroyed(this.#destroyRef))
       .subscribe({
-        next: () => this.#router.navigate(['/tasks']),
+        next: () => this.#authService.navigateAfterLogin(),
         error: (err) => {
           this.#snackBar.open(err.error.message ?? err.error.error, 'Cerrar', {
             duration: 3000,

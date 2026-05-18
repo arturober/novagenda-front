@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Nueva subtarea</h2>
+<mat-dialog-content>
+  <mat-form-field class="max-w-full pt-2 w-xs" appearance="outline">
+    <mat-label>Título</mat-label>
+    <input type="text" matInput [formField]="subtaskForm.description" placeholder="Nueva subtarea" />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton mat-dialog-close>Cancelar</button>
+  <button matButton [disabled]="subtaskForm().invalid()" (click)="addTask()">Crear</button>
+</mat-dialog-actions>
