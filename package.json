@@ -9,8 +9,8 @@
     "test": "ng test",
     "serve:ssr:novagenda-front": "node dist/novagenda-front/server/server.mjs",
     "lint": "ng lint",
-    "capacitor:dev": "ng build && npx cap sync",
-    "capacitor:prod": "ng build --prod && npx cap sync"
+    "capacitor:dev": "ng run novagenda-front:build-mobile && npx cap sync",
+    "capacitor:prod": "ng run novagenda-front:build-mobile --prod && npx cap sync"
   },
   "private": true,
   "packageManager": "npm@11.6.1",

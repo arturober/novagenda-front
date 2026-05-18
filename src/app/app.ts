@@ -17,6 +17,7 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from './auth/services/auth-service';
 import { SideMenuService } from './shared/services/side-menu-service';
 import { MatBadge } from '@angular/material/badge';
+import { Capacitor, SystemBars, SystemBarsStyle, SystemBarType } from '@capacitor/core';
 
 interface MenuOpenValues {
   menuOpen: boolean;
@@ -95,6 +96,10 @@ export class App {
   // TODO: Implementar anytouch para eventos táctiles
 
   constructor() {
+    if (Capacitor.isNativePlatform()) {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+      SystemBars.setStyle({ style: prefersDark ? SystemBarsStyle.Dark : SystemBarsStyle.Light });
+    }
     const bigScreenQuery = this.#media.matchMedia('(min-width: 1280px)');
     this.isBigScreen.set(bigScreenQuery.matches);
     const bigScreenQueryListener = () => this.isBigScreen.set(bigScreenQuery.matches);
