@@ -1,1 +1,21 @@
-<p>task-today-page works!</p>
+<mat-card appearance="outlined">
+  <header class="p-4">
+    <button matIconButton (click)="prevDay()">
+      <mat-icon svgIcon="chevron-left"></mat-icon>
+    </button>
+    <mat-card-title>{{ date() | dateIntl: 'es-ES' : 'full' | firstUppercase }}</mat-card-title>
+    <button matIconButton (click)="nextDay()">
+      <mat-icon svgIcon="chevron-right"></mat-icon>
+    </button>
+  </header>
+  <mat-card-content>
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-2">
+      @for (task of tasks(); track task.id) {
+        <task-item [task]="task"></task-item>
+      }
+    </div>
+    @if(!tasks().length) {
+        <p class="text-(--mat-sys-secondary) text-lg text-center">No hay tareas para esta fecha</p>
+    }
+  </mat-card-content>
+</mat-card>

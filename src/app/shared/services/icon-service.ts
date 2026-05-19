@@ -44,6 +44,9 @@ export class IconService {
     'check',
     'avg-pace',
     'send',
+    'chevron-left',
+    'chevron-right',
+    'send',
   ];
 
   public registerIcons(): void {

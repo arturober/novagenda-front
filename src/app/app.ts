@@ -1,6 +1,7 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Component, computed, DestroyRef, inject, linkedSignal, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatBadge } from '@angular/material/badge';
 import { MatIcon } from '@angular/material/icon';
 import {
   MatActionList,
@@ -14,10 +15,9 @@ import {
 } from '@angular/material/list';
 import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Capacitor, SystemBars, SystemBarsStyle } from '@capacitor/core';
 import { AuthService } from './auth/services/auth-service';
 import { SideMenuService } from './shared/services/side-menu-service';
-import { MatBadge } from '@angular/material/badge';
-import { Capacitor, SystemBars, SystemBarsStyle, SystemBarType } from '@capacitor/core';
 
 interface MenuOpenValues {
   menuOpen: boolean;
