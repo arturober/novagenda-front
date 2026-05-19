@@ -45,6 +45,9 @@ export class IconService {
     'avg-pace',
     'send',
     'google-color',
+    'chevron-left',
+    'chevron-right',
+    'send',
   ];
 
   public registerIcons(): void {

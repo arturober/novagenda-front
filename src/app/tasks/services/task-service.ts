@@ -19,6 +19,16 @@ export class TaskService {
     return httpResource<TaskListResponse>(() => 'tasks');
   }
 
+  getTasksByDateResource(startDate: Signal<string>, endDate: Signal<string>) {
+    return httpResource<TaskListResponse>(() => {
+      const params = new URLSearchParams({
+        start: startDate(),
+        end: endDate()
+      });
+      return `tasks?${params}`
+    });
+  }
+
   getTaskResource(id: Signal<string>) {
     return httpResource<SingleTaskResponse>(() => `tasks/${id()}`);
   }
