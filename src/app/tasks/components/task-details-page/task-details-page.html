@@ -1,10 +1,10 @@
 <div class="min-h-screen flex flex-col">
   <top-bar [title]="task()?.title ?? ''" backUrl="/tasks"></top-bar>
   <div class="page-body grow relative flex flex-col items-center min-h-full">
-    <main class="p-4 grow w-3xl max-w-[stretch]">
+    <main class="grow w-3xl max-w-[stretch]">
       <router-outlet></router-outlet>
     </main>
-    <div class="tabs-wrapper sticky bottom-0 z-10 transition-[translate] w-full">
+    <div class="tabs-wrapper sticky bottom-0 z-10 transition-[translate] w-full border-t border-gray-100 dark:border-gray-800 backdrop-blur-lg">
       <adaptative-tabs
         class="h-fit"
         [tabs]="[

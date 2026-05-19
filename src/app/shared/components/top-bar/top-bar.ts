@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   templateUrl: './top-bar.html',
   styleUrl: './top-bar.css',
   host: {
-    class: 'page-header sticky top-0 left-0 z-20 transition-[translate]',
+    class: 'page-header sticky top-0 left-0 z-20 transition-[translate] backdrop-blur-lg',
   },
 })
 export class TopBar {

@@ -14,8 +14,11 @@ import {
 } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
-import { GoogleLogin } from '../../google-login/google-login';
+import { GoogleLoginBtn } from '../../google-login/google-login-btn';
 import { AuthService } from '../../services/auth-service';
+import { Capacitor } from '@capacitor/core';
+import { GoogleLogin } from "../../google-login/google-login";
+import { SignInResult } from '@capawesome/capacitor-google-sign-in';
 
 interface LoginModel {
   email: string;
@@ -42,8 +45,9 @@ interface LoginModel {
     MatAnchor,
     MatButton,
     RouterLink,
-    GoogleLogin,
-  ],
+    GoogleLoginBtn,
+    GoogleLogin
+],
   templateUrl: './login-page.html',
   styleUrl: './login-page.scss',
   host: {
@@ -88,10 +92,18 @@ export class LoginPage {
   );
 
   showPass = signal(false);
+  native = Capacitor.isNativePlatform();
 
-  loggedGoogle(resp: google.accounts.id.CredentialResponse) {
+  loggedGoogle(resp: google.accounts.id.CredentialResponse | SignInResult) {
+    let token;
+    if(Object.hasOwn(resp, "credential")) {
+      token = (resp as google.accounts.id.CredentialResponse).credential;
+    } else {
+      token = (resp as SignInResult).idToken;
+    }
+
     this.#authService
-      .loginGoogle(resp.credential)
+      .loginGoogle(token)
       .pipe(takeUntilDestroyed(this.#destroyRef))
       .subscribe({
         next: () => this.#authService.navigateAfterLogin(),

@@ -10,6 +10,8 @@ android {
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
     implementation project(':capacitor-clipboard')
+    implementation project(':capawesome-capacitor-google-sign-in')
+    implementation project(':capgo-capacitor-navigation-bar')
 
 }
 

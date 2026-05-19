@@ -29,6 +29,8 @@
     "@capacitor/angular": "^2.0.3",
     "@capacitor/clipboard": "^8.0.1",
     "@capacitor/core": "latest",
+    "@capawesome/capacitor-google-sign-in": "^0.1.2",
+    "@capgo/capacitor-navigation-bar": "^8.1.8",
     "dayjs": "^1.11.20",
     "express": "^5.1.0",
     "rxjs": "~7.8.0",

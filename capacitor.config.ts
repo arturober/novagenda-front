@@ -8,6 +8,12 @@ const config: CapacitorConfig = {
     androidScheme: 'https',
     hostname: 'beta.fullstackpro.es',
   },
+  plugins: {
+    SystemBars: {
+      insetsHandling: 'css',
+      style: 'DEFAULT'
+    }
+  }
 };
 
 export default config;

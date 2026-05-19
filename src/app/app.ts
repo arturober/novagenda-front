@@ -1,6 +1,14 @@
 import { MediaMatcher } from '@angular/cdk/layout';
-import { Component, computed, DestroyRef, inject, linkedSignal, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  DestroyRef,
+  inject,
+  linkedSignal,
+  signal
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatBadge } from '@angular/material/badge';
 import { MatIcon } from '@angular/material/icon';
 import {
   MatActionList,
@@ -14,10 +22,11 @@ import {
 } from '@angular/material/list';
 import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Capacitor, SystemBars, SystemBarsStyle } from '@capacitor/core';
+import { GoogleSignIn } from '@capawesome/capacitor-google-sign-in';
+import { NavigationBar, NavigationBarColor } from '@capgo/capacitor-navigation-bar';
 import { AuthService } from './auth/services/auth-service';
 import { SideMenuService } from './shared/services/side-menu-service';
-import { MatBadge } from '@angular/material/badge';
-import { Capacitor, SystemBars, SystemBarsStyle, SystemBarType } from '@capacitor/core';
 
 interface MenuOpenValues {
   menuOpen: boolean;
@@ -97,9 +106,9 @@ export class App {
 
   constructor() {
     if (Capacitor.isNativePlatform()) {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-      SystemBars.setStyle({ style: prefersDark ? SystemBarsStyle.Dark : SystemBarsStyle.Light });
+      this.initializeNative();
     }
+
     const bigScreenQuery = this.#media.matchMedia('(min-width: 1280px)');
     this.isBigScreen.set(bigScreenQuery.matches);
     const bigScreenQueryListener = () => this.isBigScreen.set(bigScreenQuery.matches);
@@ -107,6 +116,37 @@ export class App {
     this.#destroyRef.onDestroy(() =>
       bigScreenQuery.removeEventListener('change', bigScreenQueryListener),
     );
+  }
+
+  async initializeNative() {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+    await NavigationBar.setNavigationBarColor({
+      color: NavigationBarColor.TRANSPARENT,
+      darkButtons: prefersDark.matches,
+    });
+
+    await SystemBars.setStyle({
+      style: prefersDark.matches ? SystemBarsStyle.Dark : SystemBarsStyle.Light,
+    });
+
+    prefersDark.addEventListener('change', (mediaQuery) => {
+      NavigationBar.setNavigationBarColor({
+        color: NavigationBarColor.TRANSPARENT,
+        darkButtons: mediaQuery.matches,
+      });
+      SystemBars.setStyle({
+        style: mediaQuery.matches ? SystemBarsStyle.Dark : SystemBarsStyle.Light,
+      });
+    });
+
+    await GoogleSignIn.initialize({
+      clientId: '940474514077-20namm6ra4h93elaaun08nvarq07i3hh.apps.googleusercontent.com',
+      scopes: [
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'https://www.googleapis.com/auth/userinfo.email',
+      ],
+    });
   }
 
   logout() {

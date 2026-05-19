@@ -15,12 +15,18 @@
         <input type="email" matInput [formField]="loginForm.email" placeholder="email@email.com" />
         @let emailErrors = loginForm.email().errors();
         @for (error of emailErrors; track $index) {
-          <mat-error>{{error.message}}</mat-error>
+          <mat-error>{{ error.message }}</mat-error>
         }
       </mat-form-field>
       <mat-form-field class="w-full" appearance="outline">
         <mat-label>Contraseña</mat-label>
-        <button matPrefix matIconButton tabindex="-1" aria-label="Show" (click)="showPass.update(s => !s)">
+        <button
+          matPrefix
+          matIconButton
+          tabindex="-1"
+          aria-label="Show"
+          (click)="showPass.update(s => !s)"
+        >
           <mat-icon [svgIcon]="showPass() ? 'eye-hidden' : 'eye-visible'"></mat-icon>
         </button>
         <input
@@ -41,24 +47,35 @@
         }
         @let passErrors = loginForm.password().errors();
         @for (error of passErrors; track $index) {
-          <mat-error>{{error.message}}</mat-error>
+          <mat-error>{{ error.message }}</mat-error>
         }
       </mat-form-field>
       <!-- <mat-checkbox class="text-gray-600">Recuerdame</mat-checkbox> -->
-      <button type="submit" matButton="filled" class="w-full" [disabled]="loginForm().invalid()">Login</button>
+      <button type="submit" matButton="filled" class="w-full" [disabled]="loginForm().invalid()">
+        Login
+      </button>
     </form>
     <div class="relative my-6">
       <div class="absolute inset-0 flex items-center">
         <div class="w-full border-t border-gray-300"></div>
       </div>
       <div class="relative flex justify-center text-sm">
-        <span class="px-4 bg-(--mat-sys-surface-container-lowest) text-(--mat-sys-secondary)">O continúa con</span>
+        <span class="px-4 bg-(--mat-sys-surface-container-lowest) text-(--mat-sys-secondary)"
+          >O continúa con</span
+        >
       </div>
     </div>
 
     <div class="row col-2 offset-sm-2">
       @defer {
-      <div googleLogin class="w-full" (login)="loggedGoogle($event)"></div>
+        @if (native) {
+          <button googleLoginBtn matButton="outlined" aria-label="Clear" class="w-full" (success)="loggedGoogle($event)">
+            <mat-icon svgIcon="google-color"></mat-icon>
+            Continuar con Google
+          </button>
+        } @else {
+          <div googleLogin class="w-full" (login)="loggedGoogle($event)"></div>
+        }
       }
     </div>
 

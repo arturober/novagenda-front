@@ -25,14 +25,12 @@ a {
   );
 }
 
-// .page-header {
-//   --mat-toolbar-container-background-color: var(--mat-sys-primary);
-//   --mat-toolbar-container-text-color: var(--mat-sys-on-primary);
-//   --mat-icon-button-icon-color: var(--mat-sys-on-primary);
-// }
-
 .tabs-wrapper {
   background-color: color-mix(in srgb, var(--mat-sys-surface-container-lowest) 80%, transparent);
+  padding-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
+
+  padding-left: var(--safe-area-inset-left, env(safe-area-inset-left, 0px));
+  padding-right: var(--safe-area-inset-right, env(safe-area-inset-right, 0px));
 }
 
 mat-expansion-panel .mat-expansion-panel-body {
@@ -58,6 +56,26 @@ mat-card.task-card {
   }
 }
 
+mat-sidenav {
+  padding-top: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
+  padding-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
+  padding-left: var(--safe-area-inset-left, env(safe-area-inset-left, 0px));
+}
+
+main {
+  padding-bottom: calc(1rem + var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px)));
+  padding-left: calc(1rem + var(--safe-area-inset-left, env(safe-area-inset-left, 0px)));
+  padding-right: calc(1rem + var(--safe-area-inset-right, env(safe-area-inset-right, 0px)));
+  padding-top: 1rem;
+}
+
+top-bar {
+  background: color-mix(in srgb, var(--mat-toolbar-container-background-color, var(--mat-sys-surface)) 80%, transparent);
+  padding-left: var(--safe-area-inset-left, env(safe-area-inset-left, 0px));
+  padding-right: var(--safe-area-inset-right, env(safe-area-inset-right, 0px));
+  padding-top: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
+}
+
 .page-body {
   container-name: page-body;
   container-type: inline-size;
@@ -77,6 +95,8 @@ mat-card.task-card {
       width: auto;
       position: absolute;
       background-color: var(--mat-sys-surface-container-lowest);
+      // padding-left: var(--safe-area-inset-left, env(safe-area-inset-left, 0px));
+      // padding-bottom: 0;
 
       adaptative-tabs {
         flex-direction: column;
@@ -104,6 +124,7 @@ mat-card.task-card {
           margin-inline: 1.25rem;
           justify-content: flex-start;
           gap: 0.5rem;
+          padding-block: calc(var(--spacing) * 2);
         }
 
         div {
