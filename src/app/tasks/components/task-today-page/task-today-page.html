@@ -4,6 +4,12 @@
       <mat-icon svgIcon="chevron-left"></mat-icon>
     </button>
     <mat-card-title>{{ date() | dateIntl: 'es-ES' : 'full' | firstUppercase }}</mat-card-title>
+    <button matIconButton (click)="picker.open()">
+      <mat-icon svgIcon="today"></mat-icon>
+      <input matInput [matDatepicker]="picker" [formField]="dateField" class="invisible w-0 h-0">
+      <mat-datepicker #picker [touchUi]="isMobileOS"></mat-datepicker>
+    </button>
+
     <button matIconButton (click)="nextDay()">
       <mat-icon svgIcon="chevron-right"></mat-icon>
     </button>

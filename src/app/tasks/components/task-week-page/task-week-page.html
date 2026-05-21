@@ -1,1 +1,21 @@
-<p>task-week-page works!</p>
+<mat-accordion multi>
+  @for (dayTasks of weekTasks; track dayTasks[0]) {
+    <mat-expansion-panel [expanded]="false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span [matBadge]="dayTasks[1]().length" matBadgeOverlap="false" class="mt-2">
+            {{ dayTasks[0] | dateIntl: 'es-ES' : 'full' | firstUppercase }}
+          </span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-2">
+        @for (task of dayTasks[1](); track task.id) {
+          <task-item [task]="task"></task-item>
+        }
+      </div>
+      @if (!dayTasks[1]().length) {
+        <p class="text-(--mat-sys-secondary) text-lg text-center">No hay tareas para esta fecha</p>
+      }
+    </mat-expansion-panel>
+  }
+</mat-accordion>

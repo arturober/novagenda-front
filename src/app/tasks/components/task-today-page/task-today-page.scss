@@ -1,6 +1,26 @@
+mat-card {
+  container-type: inline-size;
+
+  mat-card-title {
+    text-align: center;
+    order: -1;
+    width: 100%;
+
+    @container (min-width: 500px) {
+      order: 0;
+      width: auto;
+    }
+  }
+}
+
 header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  @container (min-width: 500px) {
     gap: 1rem;
+  }
 }

@@ -7,13 +7,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TopBar } from '../../../shared/components/top-bar/top-bar';
 import { MatCard } from '@angular/material/card';
-import { MatActionList, MatDivider, MatListItem, MatListItemTitle } from '@angular/material/list';
+import { MatActionList, MatDivider, MatListItem } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
 import { Invitation } from '../../../tasks/interfaces/invitation';
 
 @Component({
   selector: 'invitations-page',
-  imports: [TopBar, MatCard, MatActionList, MatListItem, MatIcon, MatDivider, MatListItemTitle],
+  imports: [TopBar, MatCard, MatActionList, MatListItem, MatIcon, MatDivider],
   templateUrl: './invitations-page.html',
   styleUrl: './invitations-page.scss',
 })

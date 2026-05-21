@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatBadge } from '@angular/material/badge';
-import { MatBadge } from '@angular/material/badge';
 import { MatIcon } from '@angular/material/icon';
 import {
   MatActionList,
@@ -23,7 +22,6 @@ import {
 } from '@angular/material/list';
 import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { Capacitor, SystemBars, SystemBarsStyle } from '@capacitor/core';
 import { GoogleSignIn } from '@capawesome/capacitor-google-sign-in';
 import { NavigationBar, NavigationBarColor } from '@capgo/capacitor-navigation-bar';
 import { Capacitor, SystemBars, SystemBarsStyle } from '@capacitor/core';

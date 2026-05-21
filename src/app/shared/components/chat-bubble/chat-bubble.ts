@@ -1,10 +1,8 @@
 import { Component, computed, input } from '@angular/core';
 import { TaskComment } from '../../../tasks/interfaces/comment';
-import { DateIntlPipe } from '../../pipes/date-intl-pipe';
 
 @Component({
   selector: 'chat-bubble',
-  imports: [DateIntlPipe],
   templateUrl: './chat-bubble.html',
   styleUrl: './chat-bubble.scss',
 })

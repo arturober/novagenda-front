@@ -1,0 +1,7 @@
+@use '@angular/material' as mat;
+
+mat-panel-title {
+  @include mat.badge-overrides((
+    background-color: var(--mat-sys-tertiary),
+  ));
+}

@@ -12,15 +12,10 @@ import { MatCard } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import {
-  MatList,
-  MatListItem,
   MatListItemAvatar,
-  MatListItemIcon,
-  MatListItemLine,
-  MatListItemMeta,
   MatListItemTitle,
   MatListOption,
-  MatSelectionList,
+  MatSelectionList
 } from '@angular/material/list';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NewSubtaskDialog } from '../../dialogs/new-subtask-dialog/new-subtask-dialog';
@@ -30,14 +25,9 @@ import { TaskService } from '../../services/task-service';
 @Component({
   selector: 'task-subtasks-page',
   imports: [
-    MatList,
     MatSelectionList,
-    MatListItem,
     MatListOption,
-    MatListItemMeta,
     MatListItemTitle,
-    MatListItemLine,
-    MatListItemIcon,
     MatIcon,
     MatIconButton,
     MatButton,

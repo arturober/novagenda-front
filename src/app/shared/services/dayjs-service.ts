@@ -30,7 +30,6 @@ export class DayjsService {
     const dateJS = dayjs(date);
     const nextWeek = dateJS.add(1, 'week');
     const lastWeek = dateJS.subtract(1, 'week');
-    console.log(lastWeek.toISOString(), nextWeek.toISOString());
     if(today.isBetween(lastWeek, nextWeek, 'day')) {
       return dayjs(date).calendar(today, this.#calendarConfig);
 
