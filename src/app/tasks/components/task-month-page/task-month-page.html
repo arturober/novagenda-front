@@ -1,1 +1,41 @@
-<p>task-month-page works!</p>
+<mat-card appearance="outlined">
+  <header class="p-4">
+    <button matIconButton (click)="prevMonth()">
+      <mat-icon svgIcon="chevron-left"></mat-icon>
+    </button>
+    <mat-card-title>{{ monthName() | firstUppercase }}</mat-card-title>
+    <button matIconButton (click)="nextMonth()">
+      <mat-icon svgIcon="chevron-right"></mat-icon>
+    </button>
+  </header>
+
+  <mat-card-content class="p-4">
+    <div class="weekdays-grid">
+      <div class="weekday-header">Lun</div>
+      <div class="weekday-header">Mar</div>
+      <div class="weekday-header">Mié</div>
+      <div class="weekday-header">Jue</div>
+      <div class="weekday-header">Vie</div>
+      <div class="weekday-header">Sáb</div>
+      <div class="weekday-header">Dom</div>
+    </div>
+
+    <div class="calendar-grid">
+      @for (day of daysInGrid(); track day.dayString) {
+        <button
+          type="button"
+          class="calendar-day"
+          [class.opacity-40]="!day.isCurrentMonth"
+          [class.bg-today]="day.isToday"
+          (click)="onDayClick(day)"
+        >
+          <span class="day-number">{{ day.date.getDate() }}</span>
+          
+          @if (day.tasks.length > 0) {
+            <span class="task-count-badge">{{ day.tasks.length }}<span class="tareas-text ml-2"> tarea{{ day.tasks.length > 1 ? 's' : '' }}</span></span>
+          }
+        </button>
+      }
+    </div>
+  </mat-card-content>
+</mat-card>

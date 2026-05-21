@@ -28,7 +28,6 @@ export class ManageInvitationDialog {
   readonly #snackBar = inject(MatSnackBar);
 
   acceptInvitation() {
-    console.log('HOLAAAA');
     this.#taskInvitationService
       .acceptInvitation(this.invitation.id)
       .pipe(takeUntilDestroyed(this.#destroyRef))

@@ -46,7 +46,9 @@
 
 <mat-menu #optionsMenu="matMenu">
   <ng-template matMenuContent>
-    <a mat-menu-item [routerLink]="['/tasks', task().id]"><mat-icon svgIcon="eye-visible"></mat-icon><span>Ver detalles</span></a>
+    <button mat-menu-item (click)="goDetails()">
+      <mat-icon svgIcon="eye-visible"></mat-icon><span>Ver detalles</span>
+    </button>
     <button mat-menu-item>
       <mat-icon svgIcon="check-box"></mat-icon>
       <span>Marcar completada</span>

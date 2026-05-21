@@ -1,10 +1,30 @@
-<mat-accordion multi>
+<mat-card appearance="outlined">
+  <header class="p-4">
+    <button matIconButton (click)="prevWeek()">
+      <mat-icon svgIcon="chevron-left"></mat-icon>
+    </button>
+    <mat-card-title
+      >{{ weekStart() | dateIntl: 'es-ES' : 'medium' | firstUppercase }} -
+      {{ weekEnd() | dateIntl: 'es-ES' : 'medium' | firstUppercase }}</mat-card-title
+    >
+    <button matIconButton (click)="nextWeek()">
+      <mat-icon svgIcon="chevron-right"></mat-icon>
+    </button>
+  </header>
+</mat-card>
+
+<mat-accordion multi class="mt-4 block">
   @for (dayTasks of weekTasks; track dayTasks[0]) {
-    <mat-expansion-panel [expanded]="false">
-      <mat-expansion-panel-header>
+    <mat-expansion-panel [expanded]="false" #panel>
+      <mat-expansion-panel-header
+        [matBadge]="dayTasks[1]().length"
+        matBadgeOverlap="false"
+        class="mt-2"
+        [matBadgeHidden]="panel.expanded || !dayTasks[1]().length"
+      >
         <mat-panel-title>
-          <span [matBadge]="dayTasks[1]().length" matBadgeOverlap="false" class="mt-2">
-            {{ dayTasks[0] | dateIntl: 'es-ES' : 'full' | firstUppercase }}
+          <span>
+            {{ dayTasks[0]() | dateIntl: 'es-ES' : 'full' | firstUppercase }}
           </span>
         </mat-panel-title>
       </mat-expansion-panel-header>

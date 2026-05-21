@@ -13,6 +13,9 @@ import { TaskService } from '../../services/task-service';
 import { TaskItem } from '../task-item/task-item';
 import { TasksPage } from '../tasks-page/tasks-page';
 import { MatBadge } from '@angular/material/badge';
+import { MatCard, MatCardTitle } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
 
 @Component({
   selector: 'task-week-page',
@@ -25,6 +28,10 @@ import { MatBadge } from '@angular/material/badge';
     DateIntlPipe,
     FirstUppercasePipe,
     MatBadge,
+    MatCard,
+    MatCardTitle,
+    MatIcon,
+    MatIconButton,
   ],
   templateUrl: './task-week-page.html',
   styleUrl: './task-week-page.scss',
@@ -37,13 +44,11 @@ export class TaskWeekPage {
   weekStart = linkedSignal(() => {
     const d = new Date(this.today());
     d.setDate(d.getDate() - d.getDay() + 1);
-    console.log('weekStart', d);
     return d;
   });
   weekEnd = computed(() => {
     const d = new Date(this.weekStart());
     d.setDate(d.getDate() + 6);
-    console.log('weekEnd', this.weekStart());
     return d;
   });
 
@@ -59,29 +64,33 @@ export class TaskWeekPage {
     this.tasklistResource.hasValue() ? this.tasklistResource.value().tasks : [],
   );
 
-  weekTasks: [Date, Signal<Task[]>][] = [];
+  weekTasks: [Signal<Date>, Signal<Task[]>][] = [];
 
   constructor() {
     this.#tasksPage.reloadTasksEvent$
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.tasklistResource.reload());
 
-    const start = this.weekStart();
     for (let i = 0; i <= 6; i++) {
-      const d = new Date(start);
-      d.setDate(d.getDate() + i);
-      this.weekTasks.push([d, computed(() => this.getTasksForDay(i))]);
+      this.weekTasks.push([
+        computed(() => {
+          const d = new Date(this.weekStart());
+          d.setDate(d.getDate() + i);
+          return d;
+        }),
+        computed(() => this.getTasksForDay(i)),
+      ]);
     }
   }
 
   private getTasksForDay(offset: number): Task[] {
-    const d = new Date(this.weekStart());
-    d.setDate(d.getDate() + offset);
-    const dayStr = d.toISOString().slice(0, 10);
-
     if (!this.tasklistResource.hasValue() || !this.tasklistResource.value()) {
       return [];
     }
+
+    const d = new Date(this.weekStart());
+    d.setDate(d.getDate() + offset);
+    const dayStr = d.toISOString().slice(0, 10);
 
     const allTasks = this.tasklistResource.value()!.tasks || [];
 
@@ -105,5 +114,21 @@ export class TaskWeekPage {
 
       return acc;
     }, []);
+  }
+
+  prevWeek() {
+    this.weekStart.update((d) => {
+      const date = new Date(d);
+      date.setDate(date.getDate() - 7);
+      return date;
+    });
+  }
+
+  nextWeek() {
+    this.weekStart.update((d) => {
+      const date = new Date(d);
+      date.setDate(date.getDate() + 7);
+      return date;
+    });
   }
 }

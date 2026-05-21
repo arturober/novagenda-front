@@ -61,8 +61,6 @@ export class TaskTodayPage {
     this.#tasksPage.reloadTasksEvent$
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.tasklistResource.reload());
-
-    effect(() => console.log(this.date()));
   }
 
   nextDay() {

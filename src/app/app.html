@@ -56,7 +56,7 @@
           [activated]="currentUrl() === '/invitations'"
           (click)="sideMenuService.open.set(false)"
         >
-          <mat-icon matListItemIcon svgIcon="group" [matBadge]="invitations()"></mat-icon>
+          <mat-icon matListItemIcon svgIcon="group" aria-hidden="false" [matBadge]="invitations()"></mat-icon>
           <span matListItemTitle>Invitaciones</span>
         </a>
     </mat-nav-list>
