@@ -71,6 +71,18 @@ export class TaskService {
     return this.#http.post<SingleSubtaskResponse>(`tasks/${taskId}/subtasks`, subtask);
   }
 
+  removeTask(id: string) {
+    return this.#http.delete<void>(`tasks/${id}`);
+  }
+
+  completeTask(id: string, completed: boolean, occurrenceDate?: string) {
+    return this.#http.patch<void>(`tasks/${id}/complete`, { completed, occurrenceDate });
+  }
+
+  cancelOccurrence(id: string, occurrenceDate: string) {
+    return this.#http.patch<void>(`tasks/${id}/cancel`, { occurrenceDate });
+  }
+
   completeSubTask(taskId: string, subtaskId: string, completed: boolean) {
     return this.#http.patch<SingleSubtaskResponse>(
       `tasks/${taskId}/subtasks/${subtaskId}/complete`,

@@ -49,10 +49,17 @@
     <button mat-menu-item (click)="goDetails()">
       <mat-icon svgIcon="eye-visible"></mat-icon><span>Ver detalles</span>
     </button>
-    <button mat-menu-item>
-      <mat-icon svgIcon="check-box"></mat-icon>
-      <span>Marcar completada</span>
-    </button>
+    @if (task().isActive) {
+      <button mat-menu-item (click)="complete()">
+        <mat-icon svgIcon="check-box"></mat-icon>
+        <span>Marcar completada</span>
+      </button>
+    } @else {
+      <button mat-menu-item (click)="uncomplete()">
+        <mat-icon svgIcon="check-box-outline-blank"></mat-icon>
+        <span>Marcar pendiente</span>
+      </button>
+    }
     <button mat-menu-item><mat-icon svgIcon="edit"></mat-icon><span>Editar</span></button>
     <button mat-menu-item><mat-icon svgIcon="delete"></mat-icon><span>Eliminar</span></button>
   </ng-template>

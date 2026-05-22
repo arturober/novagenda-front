@@ -90,7 +90,7 @@
             {{ task.endDate ? 'Fecha Inicio' : 'Fecha' }}
           </div>
           <div matListItemLine>
-            {{ task.startDate | dateIntl: 'es-ES' : 'full' }}
+            {{ date()! | dateIntl: 'es-ES' : 'full' }}
           </div>
         </mat-list-item>
       }
@@ -137,6 +137,11 @@
           <div matListItemLine>
             {{ frequency() }}
           </div>
+          @if (date() !== task.startDate) {
+            <div matListItemLine class="text-xs!">
+              Inicio: {{ task.startDate! | dateIntl: 'es-ES' : 'full' }}
+            </div>
+          }
         </mat-list-item>
       }
     </mat-list>

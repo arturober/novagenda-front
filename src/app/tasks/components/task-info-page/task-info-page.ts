@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import {
@@ -35,8 +35,11 @@ import { MatButton } from '@angular/material/button';
   styleUrl: './task-info-page.scss',
 })
 export class TaskInfoPage {
+  occurrenceDate = input<string>();
+
   readonly #taskDetailsPage = inject(TaskDetailsPage);
   task = this.#taskDetailsPage.task;
+  date = computed(() => this.occurrenceDate() || this.task()?.startDate);
 
   priorityLabel = computed(() => {
     switch (this.task()?.priority) {
