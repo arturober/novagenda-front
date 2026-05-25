@@ -50,21 +50,9 @@ export class TaskMonthPage {
     return end;
   });
 
-  monthStringStart = computed(() => {
-    const d = this.gridStart();
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  });
+  monthStringStart = computed(() => this.gridStart().toISOString().slice(0, 10));
 
-  monthStringEnd = computed(() => {
-    const d = this.gridEnd();
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  });
+  monthStringEnd = computed(() => this.gridEnd().toISOString().slice(0, 10));
 
   tasklistResource = this.#taskService.getTasksByDateResource(
     this.monthStringStart,
@@ -132,13 +120,20 @@ export class TaskMonthPage {
       const isDailyRecurrence =
         !!task.startDate && task.startDate < dayStr && task.rrule === 'FREQ=DAILY';
 
+      const startDay = new Date(task.startDate!);
+      const currentDay = new Date(dayStr);
+      const diffDays = (currentDay.getTime() - startDay.getTime()) / 1000 / 60 / 60 / 24;
+      const isWeeklyRecurrence = !!task.startDate && task.startDate < dayStr && diffDays % 7 === 0;
+
       if (startsOnDay || inRange) {
         acc.push(task);
-      } else if (isDailyRecurrence) {
-        acc.push({
-          ...task,
-          startDate: dayStr,
-        });
+      } else if (isDailyRecurrence || isWeeklyRecurrence) {
+        if (!task.interactions.some((interaction) => interaction.occurrenceDate.slice(0, 10) === dayStr)) {
+          acc.push({
+            ...task,
+            startDate: dayStr,
+          });
+        }
       }
 
       return acc;

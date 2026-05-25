@@ -23,14 +23,21 @@ export class TaskService {
     return httpResource<TaskListResponse>(() => {
       const params = new URLSearchParams({
         start: startDate(),
-        end: endDate()
+        end: endDate(),
       });
-      return `tasks?${params}`
+      return `tasks?${params}`;
     });
   }
 
-  getTaskResource(id: Signal<string>) {
-    return httpResource<SingleTaskResponse>(() => `tasks/${id()}`);
+  getTaskResource(id: Signal<string | undefined>, occurrenceDate?: Signal<string | undefined>) {
+    return httpResource<SingleTaskResponse>(() => {
+      const params = occurrenceDate?.()
+        ? new URLSearchParams({
+            occurrenceDate: occurrenceDate()!,
+          })
+        : '';
+      return id() ? `tasks/${id()}?${params}` : undefined;
+    });
   }
 
   getOverdueTasksResource(load: Signal<boolean>, page: Signal<number>) {
@@ -65,6 +72,10 @@ export class TaskService {
 
   insertTask(task: TaskInsert) {
     return this.#http.post<SingleTaskResponse>('tasks', task);
+  }
+
+  updateTask(id: string, task: TaskInsert) {
+    return this.#http.put<SingleTaskResponse>(`tasks/${id}`, task);
   }
 
   insertSubtask(taskId: string, subtask: SubtaskInsert) {

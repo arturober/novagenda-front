@@ -54,8 +54,13 @@ export class TaskItem {
     this.#router.navigate(['/tasks', this.task().id], {queryParams: {occurrenceDate: this.task().startDate}});
   }
 
+  goEdit() {
+    this.navigationTriggered.emit();
+    this.#router.navigate(['/tasks', 'edit', this.task().id]);
+  }
+
   complete() {
-    this.#taskService.completeTask(this.task().id, true).subscribe(() => {
+    this.#taskService.completeTask(this.task().id, true, this.task().startDate ?? undefined).subscribe(() => {
       this.completed.emit(true);
     });
   }

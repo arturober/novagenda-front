@@ -6,7 +6,7 @@
 
     <div class="grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-2">
       @for (task of taskNoDate(); track task.id) {
-        <task-item [task]="task"></task-item>
+        <task-item [task]="task" (completed)="tasksReload()" (deleted)="tasksReload()"></task-item>
       }
     </div>
   </mat-expansion-panel>
@@ -17,7 +17,7 @@
 
     <div class="grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-2">
       @for (task of taskDate(); track task.id) {
-        <task-item [task]="task"></task-item>
+        <task-item [task]="task" (completed)="tasksReload()" (deleted)="tasksReload()"></task-item>
       }
     </div>
   </mat-expansion-panel>
@@ -28,7 +28,7 @@
 
     <div class="grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-2">
       @for (task of tasksOverdue(); track task.id) {
-        <task-item [task]="task"></task-item>
+        <task-item [task]="task" (completed)="tasksReload()" (deleted)="tasksReload()"></task-item>
       }
     </div>
   </mat-expansion-panel>
@@ -40,7 +40,7 @@
 
     <div class="grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-2">
       @for (task of tasksCompleted(); track task.id) {
-        <task-item [task]="task"></task-item>
+        <task-item [task]="task" (completed)="tasksReload()" (deleted)="tasksReload()"></task-item>
       }
     </div>
   </mat-expansion-panel>

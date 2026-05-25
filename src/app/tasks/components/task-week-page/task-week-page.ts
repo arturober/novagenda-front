@@ -106,10 +106,16 @@ export class TaskWeekPage {
       if (startsOnDay || inRange) {
         acc.push(task);
       } else if (isDailyRecurrence) {
-        acc.push({
-          ...task,
-          startDate: dayStr,
-        });
+        if (
+          !task.interactions.some(
+            (interaction) => interaction.occurrenceDate.slice(0, 10) === dayStr,
+          )
+        ) {
+          acc.push({
+            ...task,
+            startDate: dayStr,
+          });
+        }
       }
 
       return acc;

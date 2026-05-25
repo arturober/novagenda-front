@@ -1,5 +1,6 @@
 import { User } from "../../auth/interfaces/user";
 import { Category } from "../../categories/interfaces/category";
+import { TaskInteraction } from "./interaction";
 
 export interface TaskInsert {
   title: string;
@@ -18,6 +19,7 @@ export interface Task extends Required<Omit<TaskInsert, 'category'>> {
   owner: User;
   isActive: boolean;
   category: Category | null;
+  interactions: TaskInteraction[];
 }
 
 export interface TaskListResponse {

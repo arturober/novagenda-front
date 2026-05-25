@@ -60,7 +60,13 @@
         <span>Marcar pendiente</span>
       </button>
     }
-    <button mat-menu-item><mat-icon svgIcon="edit"></mat-icon><span>Editar</span></button>
-    <button mat-menu-item><mat-icon svgIcon="delete"></mat-icon><span>Eliminar</span></button>
+    <button mat-menu-item (click)="goEdit()">
+      <mat-icon svgIcon="edit"></mat-icon>
+      <span>Editar</span>
+    </button>
+    <button mat-menu-item (click)="delete()">
+      <mat-icon svgIcon="delete"></mat-icon>
+      <span>Eliminar</span>
+    </button>
   </ng-template>
 </mat-menu>

@@ -5,6 +5,7 @@ import {
   DestroyRef,
   effect,
   inject,
+  input,
   linkedSignal,
   signal,
 } from '@angular/core';
@@ -36,7 +37,7 @@ import { Router, RouterLink } from '@angular/router';
 import dayjs from 'dayjs';
 import { TopBar } from '../../../shared/components/top-bar/top-bar';
 import { SideMenuService } from '../../../shared/services/side-menu-service';
-import { TaskInsert } from '../../interfaces/task';
+import { SingleTaskResponse, TaskInsert } from '../../interfaces/task';
 import { TaskService } from '../../services/task-service';
 import { CategoriesService } from '../../../categories/services/categories-service';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
@@ -44,6 +45,7 @@ import { Category } from '../../../categories/interfaces/category';
 import { MatDialog } from '@angular/material/dialog';
 import { NewCategoryDialog } from '../../../categories/dialogs/new-category-dialog/new-category-dialog';
 import { MatCard } from '@angular/material/card';
+import { Observable } from 'rxjs';
 
 interface TaskModel {
   title: string;
@@ -88,13 +90,15 @@ interface TaskModel {
     MatAutocomplete,
     MatAutocompleteTrigger,
     MatIconButton,
-    MatCard
+    MatCard,
   ],
   templateUrl: './task-form-page.html',
   styleUrl: './task-form-page.scss',
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'es-ES' }, provideNativeDateAdapter()],
 })
 export class TaskFormPage {
+  id = input<string>();
+
   readonly #sideMenuService = inject(SideMenuService);
   readonly #taskService = inject(TaskService);
   readonly #categoriesService = inject(CategoriesService);
@@ -105,6 +109,8 @@ export class TaskFormPage {
   readonly platform = inject(Platform);
 
   isMobileOS = this.platform.IOS || this.platform.ANDROID;
+
+  taskResource = this.#taskService.getTaskResource(this.id);
 
   taskModel = signal<TaskModel>({
     title: '',
@@ -177,6 +183,22 @@ export class TaskFormPage {
         this.taskModel.update((task) => ({ ...task, startTime: null }));
       }
     });
+
+    effect(() => {
+      if (this.taskResource.hasValue()) {
+        const task = this.taskResource.value().task;
+        this.taskModel.set({
+          title: task.title,
+          description: task.description ?? '',
+          startDate: task.startDate ? dayjs(task.startDate).toDate() : null,
+          startTime: task.startTime ? dayjs(task.startTime, 'HH:mm').toDate() : null,
+          endDate: task.endDate ? dayjs(task.endDate).toDate() : null,
+          priority: task.priority,
+          rrule: task.rrule,
+          category: task.category ? { ...task.category, color: '' } : null,
+        });
+      }
+    });
   }
 
   openMenu() {
@@ -193,19 +215,30 @@ export class TaskFormPage {
     const startTime = this.taskModel().startTime
       ? dayjs(this.taskModel().startTime).format('HH:mm')
       : null;
-    const task: TaskInsert = { ...this.taskModel(), startDate, endDate, startTime, category: this.taskModel().category?.id };
+    const task: TaskInsert = {
+      ...this.taskModel(),
+      startDate,
+      endDate,
+      startTime,
+      category: this.taskModel().category?.id,
+    };
 
-    this.#taskService
-      .insertTask(task)
-      .pipe(takeUntilDestroyed(this.#destroyRef))
-      .subscribe({
-        next: () => this.#router.navigate(['/tasks']),
-        error: (err) =>
-          this.#snackBar.open(err.error.message ?? err.error.error, 'Cerrar', {
-            duration: 3000,
-            panelClass: 'error',
-          }),
-      });
+    let request$: Observable<SingleTaskResponse>;
+    if (this.id()) {
+      request$ = this.#taskService
+        .updateTask(this.id()!, task)
+        .pipe(takeUntilDestroyed(this.#destroyRef));
+    } else {
+      request$ = this.#taskService.insertTask(task).pipe(takeUntilDestroyed(this.#destroyRef));
+    }
+    request$.subscribe({
+      next: (resp) => this.#router.navigate(['/tasks', resp.task.id]),
+      error: (err) =>
+        this.#snackBar.open(err.error.message ?? err.error.error, 'Cerrar', {
+          duration: 3000,
+          panelClass: 'error',
+        }),
+    });
   }
 
   getCategoryName(category: Category | null) {

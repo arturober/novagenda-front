@@ -7,6 +7,11 @@ export const tasksRoutes: Routes = [
       import('./components/task-form-page/task-form-page').then((m) => m.TaskFormPage),
   },
   {
+    path: 'edit/:id',
+    loadComponent: () =>
+      import('./components/task-form-page/task-form-page').then((m) => m.TaskFormPage),
+  },
+  {
     path: '',
     loadComponent: () => import('./components/tasks-page/tasks-page').then((m) => m.TasksPage),
     children: [

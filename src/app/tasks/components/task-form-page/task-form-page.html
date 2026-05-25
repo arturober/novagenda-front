@@ -1,5 +1,5 @@
 <div class="min-h-screen flex flex-col">
-  <top-bar title="Nueva Tarea"></top-bar>
+  <top-bar [title]="id() ? 'Actualizar Tarea' : 'Nueva Tarea'" [backUrl]="id() ? `/tasks/${id()}` : null"></top-bar>
   <main class="page-body grow min-h-full p-4 flex flex-col items-center">
     <mat-card class="w-3xl max-w-full p-4">
       <form [formRoot]="taskForm" class="w-full">
@@ -153,7 +153,7 @@
         }
 
         <button type="submit" matButton="filled" class="w-full" [disabled]="taskForm().invalid()">
-          Crear Tarea
+          {{ id() ? 'Actualizar Tarea' : 'Crear Tarea' }}
         </button>
         <a matButton="outlined" class="w-full mt-4" [routerLink]="['/tasks']"> Cancelar </a>
       </form>

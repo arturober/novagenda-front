@@ -12,9 +12,10 @@ import { TaskService } from '../../services/task-service';
 })
 export class TaskDetailsPage {
   id = input.required<string>();
+  occurrenceDate = input<string>();
 
   readonly #taskService = inject(TaskService);
-  taskResource = this.#taskService.getTaskResource(this.id);
+  taskResource = this.#taskService.getTaskResource(this.id, this.occurrenceDate);
   task = computed(() => (this.taskResource.hasValue() ? this.taskResource.value().task : null));
   mine = computed(() => (this.taskResource.hasValue() ? this.taskResource.value().mine : false));
 }

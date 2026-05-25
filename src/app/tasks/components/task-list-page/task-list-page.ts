@@ -92,4 +92,10 @@ export class TaskListPage {
       });
     });
   }
+
+  tasksReload() {
+    this.tasklistResource.reload();
+    this.tasksOverdueResource.reload();
+    this.tasksCompletedResource.reload();
+  }
 }
