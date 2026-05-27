@@ -24,6 +24,8 @@ import { Router, RouterLink } from '@angular/router';
 import { GoogleLogin } from '../../google-login/google-login';
 import { AuthService } from '../../services/auth-service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Capacitor } from '@capacitor/core';
+import { PushNotifications, Token } from '@capacitor/push-notifications';
 
 interface RegisterModel {
   name: string;
@@ -74,6 +76,7 @@ export class RegisterPage {
   });
 
   avatar = '';
+  firebaseToken?: string;
 
   registerForm = form(
     this.registerModel,
@@ -140,9 +143,22 @@ export class RegisterPage {
   showPass = signal(false);
   showPass2 = signal(false);
 
+  constructor() {
+    if (Capacitor.getPlatform() === 'android') {
+      PushNotifications.register();
+
+      // On success, we should be able to receive notifications
+      const registrationListener = PushNotifications.addListener('registration', (token: Token) => {
+        this.firebaseToken = token.value;
+      });
+
+      this.#destroyRef.onDestroy(() => registrationListener.then((r) => r.remove()));
+    }
+  }
+
   loggedGoogle(resp: google.accounts.id.CredentialResponse) {
-        this.#authService
-      .loginGoogle(resp.credential)
+    this.#authService
+      .loginGoogle(resp.credential, this.firebaseToken)
       .pipe(takeUntilDestroyed(this.#destroyRef))
       .subscribe({
         next: () => this.#authService.navigateAfterLogin(),

@@ -17,8 +17,9 @@ import { RouterLink } from '@angular/router';
 import { GoogleLoginBtn } from '../../google-login/google-login-btn';
 import { AuthService } from '../../services/auth-service';
 import { Capacitor } from '@capacitor/core';
-import { GoogleLogin } from "../../google-login/google-login";
+import { GoogleLogin } from '../../google-login/google-login';
 import { SignInResult } from '@capawesome/capacitor-google-sign-in';
+import { PushNotifications, Token } from '@capacitor/push-notifications';
 
 interface LoginModel {
   email: string;
@@ -46,8 +47,8 @@ interface LoginModel {
     MatButton,
     RouterLink,
     GoogleLoginBtn,
-    GoogleLogin
-],
+    GoogleLogin,
+  ],
   templateUrl: './login-page.html',
   styleUrl: './login-page.scss',
   host: {
@@ -58,6 +59,8 @@ export class LoginPage {
   #authService = inject(AuthService);
   #destroyRef = inject(DestroyRef);
   #snackBar = inject(MatSnackBar);
+
+  firebaseToken?: string;
 
   loginModel = signal<LoginModel>({
     email: '',
@@ -75,7 +78,7 @@ export class LoginPage {
       submission: {
         action: async () => {
           this.#authService
-            .login(this.loginModel())
+            .login(this.loginModel(), this.firebaseToken)
             .pipe(takeUntilDestroyed(this.#destroyRef))
             .subscribe({
               next: () => this.#authService.navigateAfterLogin(),
@@ -94,16 +97,29 @@ export class LoginPage {
   showPass = signal(false);
   native = Capacitor.isNativePlatform();
 
+  constructor() {
+    if (Capacitor.getPlatform() === 'android') {
+      PushNotifications.register();
+
+      // On success, we should be able to receive notifications
+      const registrationListener = PushNotifications.addListener('registration', (token: Token) => {
+        this.firebaseToken = token.value;
+      });
+
+      this.#destroyRef.onDestroy(() => registrationListener.then((r) => r.remove()));
+    }
+  }
+
   loggedGoogle(resp: google.accounts.id.CredentialResponse | SignInResult) {
     let token;
-    if(Object.hasOwn(resp, "credential")) {
+    if (Object.hasOwn(resp, 'credential')) {
       token = (resp as google.accounts.id.CredentialResponse).credential;
     } else {
       token = (resp as SignInResult).idToken;
     }
 
     this.#authService
-      .loginGoogle(token)
+      .loginGoogle(token, this.firebaseToken)
       .pipe(takeUntilDestroyed(this.#destroyRef))
       .subscribe({
         next: () => this.#authService.navigateAfterLogin(),

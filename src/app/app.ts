@@ -1,12 +1,5 @@
 import { MediaMatcher } from '@angular/cdk/layout';
-import {
-  Component,
-  computed,
-  DestroyRef,
-  inject,
-  linkedSignal,
-  signal
-} from '@angular/core';
+import { Component, computed, DestroyRef, inject, linkedSignal, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatBadge } from '@angular/material/badge';
 import { MatIcon } from '@angular/material/icon';
@@ -17,7 +10,7 @@ import {
   MatListItemIcon,
   MatListItemLine,
   MatListItemTitle,
-  MatNavList
+  MatNavList,
 } from '@angular/material/list';
 import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
@@ -27,6 +20,7 @@ import { GoogleSignIn } from '@capawesome/capacitor-google-sign-in';
 import { NavigationBar, NavigationBarColor } from '@capgo/capacitor-navigation-bar';
 import { AuthService } from './auth/services/auth-service';
 import { SideMenuService } from './shared/services/side-menu-service';
+import { ActionPerformed, PushNotifications } from '@capacitor/push-notifications';
 
 interface MenuOpenValues {
   menuOpen: boolean;
@@ -148,6 +142,20 @@ export class App {
         'https://www.googleapis.com/auth/userinfo.email',
       ],
     });
+
+    const res = await PushNotifications.checkPermissions();
+    if (res.receive !== 'granted') {
+      await PushNotifications.requestPermissions();
+    }
+
+    PushNotifications.addListener(
+      'pushNotificationActionPerformed',
+      (notification: ActionPerformed) => {
+        if (notification.notification.data.taskId) {
+          this.#router.navigate(['/tasks', notification.notification.data.taskId]);
+        }
+      }
+    );
   }
 
   logout() {

@@ -18,7 +18,9 @@ export class AuthService {
 
   #platformId = inject(PLATFORM_ID);
 
-  #loggedUserResource = httpResource<SingleUserResponse>(() => this.#logged() ? 'users/profile/mine' : undefined);
+  #loggedUserResource = httpResource<SingleUserResponse>(() =>
+    this.#logged() ? 'users/profile/mine' : undefined,
+  );
 
   get logged() {
     return this.#logged.asReadonly();
@@ -32,8 +34,8 @@ export class AuthService {
     this.#loggedUserResource.reload();
   }
 
-  login(userLogin: UserLogin): Observable<void> {
-    return this.#http.post<TokenResponse>('auth/login', userLogin).pipe(
+  login(userLogin: UserLogin, firebaseToken?: string): Observable<void> {
+    return this.#http.post<TokenResponse>('auth/login', { ...userLogin, firebaseToken }).pipe(
       map((r) => {
         localStorage.setItem('accessToken', r.accessToken);
         localStorage.setItem('refreshToken', r.refreshToken);
@@ -48,10 +50,11 @@ export class AuthService {
     return this.#http.post<void>('auth/register', userRegister);
   }
 
-  loginGoogle(token: string): Observable<void> {
+  loginGoogle(token: string, firebaseToken?: string): Observable<void> {
     return this.#http
       .post<TokenResponse>('auth/google', {
         token,
+        firebaseToken,
       })
       .pipe(
         map((r) => {
