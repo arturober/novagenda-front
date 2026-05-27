@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "940474514077",
+    "project_id": "prueba-gemini-474415",
+    "storage_bucket": "prueba-gemini-474415.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:940474514077:android:87c58353fe620a0c53f274",
+        "android_client_info": {
+          "package_name": "es.fullstackpro.novagenda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "940474514077-20namm6ra4h93elaaun08nvarq07i3hh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSkRwL2TdFL_ifU-y-oOKVdxUrRhyYnCI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "940474514077-20namm6ra4h93elaaun08nvarq07i3hh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

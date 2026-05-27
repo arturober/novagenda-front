@@ -123,12 +123,20 @@ export class TaskMonthPage {
       const startDay = new Date(task.startDate!);
       const currentDay = new Date(dayStr);
       const diffDays = (currentDay.getTime() - startDay.getTime()) / 1000 / 60 / 60 / 24;
-      const isWeeklyRecurrence = !!task.startDate && task.startDate < dayStr && diffDays % 7 === 0;
+      const isWeeklyRecurrence =
+        !!task.startDate &&
+        task.startDate < dayStr &&
+        diffDays % 7 === 0 &&
+        task.rrule === 'FREQ=WEEKLY';
 
       if (startsOnDay || inRange) {
         acc.push(task);
       } else if (isDailyRecurrence || isWeeklyRecurrence) {
-        if (!task.interactions.some((interaction) => interaction.occurrenceDate.slice(0, 10) === dayStr)) {
+        if (
+          !task.interactions.some(
+            (interaction) => interaction.occurrenceDate.slice(0, 10) === dayStr,
+          )
+        ) {
           acc.push({
             ...task,
             startDate: dayStr,

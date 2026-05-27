@@ -5,7 +5,7 @@
   </h3>
   <mat-list>
     @for (colab of collaborators(); track colab.id) {
-      <mat-list-item>
+      <mat-list-item [routerLink]="['/profile', colab.user.id]">
         <img matListItemAvatar [src]="colab.user.photo" alt="Foto del usuario" />
         <div matListItemTitle>
           {{ colab.user.name }}

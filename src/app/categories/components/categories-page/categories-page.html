@@ -27,7 +27,7 @@
                 <button
                   matIconButton
                   [matMenuTriggerFor]="optionsMenu"
-                  [matMenuTriggerData]="{ id: category.id, taskcount: category.taskCount }"
+                  [matMenuTriggerData]="{ category: category, taskcount: category.taskCount }"
                   aria-label="Opciones para la categoría"
                   class="mt-2"
                 >
@@ -49,12 +49,12 @@
 </div>
 
 <mat-menu #optionsMenu="matMenu">
-  <ng-template matMenuContent let-id="id" let-taskcount="taskcount">
-    <button mat-menu-item>
+  <ng-template matMenuContent let-category="category" let-taskcount="taskcount">
+    <button mat-menu-item (click)="showTasks(category)">
       <mat-icon svgIcon="checklist"></mat-icon>
       <span [matBadge]="taskcount" class="pe-5">Ver tareas</span>
     </button>
-    <button mat-menu-item><mat-icon svgIcon="edit"></mat-icon><span>Editar</span></button>
-    <button mat-menu-item><mat-icon svgIcon="delete"></mat-icon><span>Eliminar</span></button>
+    <button mat-menu-item (click)="editCategory(category)"><mat-icon svgIcon="edit"></mat-icon><span>Editar</span></button>
+    <button mat-menu-item (click)="deleteCategory(category.id)"><mat-icon svgIcon="delete"></mat-icon><span>Eliminar</span></button>
   </ng-template>
 </mat-menu>

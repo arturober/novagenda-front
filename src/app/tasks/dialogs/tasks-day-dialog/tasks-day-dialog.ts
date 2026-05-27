@@ -1,5 +1,5 @@
-import { Component, computed, inject, input } from '@angular/core';
-import { Task } from '../../interfaces/task';
+import { Component, inject, signal } from '@angular/core';
+import { MatButton } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -8,9 +8,9 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { MatButton } from '@angular/material/button';
-import { TaskItem } from '../../components/task-item/task-item';
 import { DateIntlPipe } from '../../../shared/pipes/date-intl-pipe';
+import { TaskItem } from '../../components/task-item/task-item';
+import { Task } from '../../interfaces/task';
 
 @Component({
   selector: 'tasks-day-dialog',
@@ -30,7 +30,13 @@ export class TasksDayDialog {
   readonly #dialogRef = inject(MatDialogRef<TasksDayDialog>);
   readonly data = inject<{ date: Date; tasks: Task[] }>(MAT_DIALOG_DATA);
 
+  tasks = signal<Task[]>(this.data.tasks);
+
   close(): void {
     this.#dialogRef.close();
+  }
+
+  removeTask(task: Task): void {
+    this.tasks.update((tasks) => tasks.filter((t) => t.id !== task.id));
   }
 }

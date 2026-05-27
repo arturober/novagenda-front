@@ -15,6 +15,7 @@ import { TaskService } from '../../services/task-service';
 import { TaskDetailsPage } from '../task-details-page/task-details-page';
 import { MatDialog } from '@angular/material/dialog';
 import { NewColabDialog } from '../../dialogs/new-colab-dialog/new-colab-dialog';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'task-colab-page',
@@ -29,6 +30,7 @@ import { NewColabDialog } from '../../dialogs/new-colab-dialog/new-colab-dialog'
     MatIconButton,
     MatButton,
     MatCard,
+    RouterLink,
   ],
   templateUrl: './task-colab-page.html',
   styleUrl: './task-colab-page.scss',

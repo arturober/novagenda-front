@@ -12,7 +12,7 @@
   <h1 class="text-lg pr-6">{{ task().title }}</h1>
   <!-- <p class="text-gray-600">{{ task().description }}</p> -->
   @if (task().category; as category) {
-    <p class="my-1">
+    <p class="mb-1">
       <span
         class="text-xs py-1 px-2 rounded-lg font-semibold text-shadow-md"
         [style]="{ color: category.color, 'background-color': category.bgColor }"
@@ -64,9 +64,21 @@
       <mat-icon svgIcon="edit"></mat-icon>
       <span>Editar</span>
     </button>
-    <button mat-menu-item (click)="delete()">
+    <button
+      mat-menu-item
+      (click)="deleteAction.delete()"
+    >
       <mat-icon svgIcon="delete"></mat-icon>
       <span>Eliminar</span>
     </button>
   </ng-template>
 </mat-menu>
+
+<span
+  style="display: none;"
+  deleteTaskAction
+  [task]="task()"
+  [occurrenceDate]="task().rrule ? task().startDate! : undefined"
+  (deleted)="deleted.emit()"
+  #deleteAction="deleteTaskAction"
+></span>

@@ -12,19 +12,19 @@ import { MatBadge } from '@angular/material/badge';
 import { MatIcon } from '@angular/material/icon';
 import {
   MatActionList,
-  MatList,
   MatListItem,
   MatListItemAvatar,
   MatListItemIcon,
   MatListItemLine,
   MatListItemTitle,
-  MatNavList,
+  MatNavList
 } from '@angular/material/list';
 import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Capacitor, SystemBars, SystemBarsStyle } from '@capacitor/core';
+import { SplashScreen } from '@capacitor/splash-screen';
 import { GoogleSignIn } from '@capawesome/capacitor-google-sign-in';
 import { NavigationBar, NavigationBarColor } from '@capgo/capacitor-navigation-bar';
-import { Capacitor, SystemBars, SystemBarsStyle } from '@capacitor/core';
 import { AuthService } from './auth/services/auth-service';
 import { SideMenuService } from './shared/services/side-menu-service';
 
@@ -46,7 +46,6 @@ interface MenuLink {
     MatSidenav,
     MatSidenavContainer,
     MatSidenavContent,
-    MatList,
     MatListItem,
     MatListItemAvatar,
     MatListItemTitle,
@@ -139,6 +138,8 @@ export class App {
         style: mediaQuery.matches ? SystemBarsStyle.Dark : SystemBarsStyle.Light,
       });
     });
+
+    SplashScreen.hide();
 
     await GoogleSignIn.initialize({
       clientId: '940474514077-20namm6ra4h93elaaun08nvarq07i3hh.apps.googleusercontent.com',

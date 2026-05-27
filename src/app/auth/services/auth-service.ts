@@ -28,6 +28,10 @@ export class AuthService {
     return this.#loggedUserResource.asReadonly();
   }
 
+  reloadUser() {
+    this.#loggedUserResource.reload();
+  }
+
   login(userLogin: UserLogin): Observable<void> {
     return this.#http.post<TokenResponse>('auth/login', userLogin).pipe(
       map((r) => {

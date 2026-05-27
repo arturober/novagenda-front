@@ -3,11 +3,16 @@
   <form [formRoot]="categoryForm">
     <mat-form-field class="w-full pt-2" appearance="outline">
       <mat-label>Nombre</mat-label>
-      <input type="text" matInput [formField]="categoryForm.name" placeholder="Nueva categoría"/>
+      <input type="text" matInput [formField]="categoryForm.name" placeholder="Nueva categoría" />
     </mat-form-field>
     <mat-form-field class="w-full pt-2" appearance="outline">
       <mat-label>Descripción</mat-label>
-      <input type="text" matInput [formField]="categoryForm.description" placeholder="Más detalles" />
+      <input
+        type="text"
+        matInput
+        [formField]="categoryForm.description"
+        placeholder="Más detalles"
+      />
     </mat-form-field>
     <mat-form-field class="w-full pt-2" appearance="outline">
       <mat-label>Color</mat-label>
@@ -15,10 +20,18 @@
     </mat-form-field>
   </form>
   <div>
-    Previsualización: <mat-chip [style.--mat-chip-label-text-color]="textColor()" [style.--mat-chip-elevated-container-color]="categoryModel().bgColor" class="font-semibold text-shadow-sm">{{categoryModel().name}}</mat-chip>
+    Previsualización:
+    <mat-chip
+      [style.--mat-chip-label-text-color]="textColor()"
+      [style.--mat-chip-elevated-container-color]="categoryModel().bgColor"
+      class="font-semibold text-shadow-sm"
+      >{{ categoryModel().name }}</mat-chip
+    >
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button matButton mat-dialog-close>Cancelar</button>
-  <button matButton [disabled]="categoryForm().invalid()" (click)="addCategory()">Crear</button>
+  <button matButton [disabled]="categoryForm().invalid()" (click)="saveCategory()">
+    {{ category ? 'Actualizar' : 'Crear' }}
+  </button>
 </mat-dialog-actions>

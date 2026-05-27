@@ -58,6 +58,10 @@ export class TaskService {
     });
   }
 
+  getTasksByCategoryResource(category: Signal<string>) {
+    return httpResource<TaskListResponse>(() => `tasks/category/${category()}`);
+  }
+
   getCollaboratorsResource(id: Signal<string>) {
     return httpResource<CollaboratorsResponse>(() => `tasks/${id()}/collaborators`);
   }

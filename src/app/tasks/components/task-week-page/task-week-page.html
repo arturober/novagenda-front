@@ -30,7 +30,7 @@
       </mat-expansion-panel-header>
       <div class="grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-2">
         @for (task of dayTasks[1](); track task.id) {
-          <task-item [task]="task"></task-item>
+          <task-item [task]="task" (deleted)="tasklistResource.reload()" (completed)="tasklistResource.reload()"></task-item>
         }
       </div>
       @if (!dayTasks[1]().length) {

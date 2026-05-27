@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>{{ category.name }}</h2>
+<mat-dialog-content>
+  <div class="flex flex-col gap-2">
+  @for (task of tasks(); track task.id) {
+    <task-item [task]="task" (navigationTriggered)="close()" (deleted)="removeTask(task)" (completed)="removeTask(task)"></task-item>
+  } @empty {
+    <p>No hay tareas para esta categoría</p>
+  }
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

@@ -1,1 +1,14 @@
-<p>confirm-dialog works!</p>
+<h2 mat-dialog-title>{{data.title}}</h2>
+<mat-dialog-content>
+  {{data.text}}
+</mat-dialog-content>
+<mat-dialog-actions>
+  @if(!data.buttons) {
+    <button matButton [mat-dialog-close]="true">Sí</button>
+    <button matButton [mat-dialog-close]="false">No</button>
+  } @else {
+    @for (button of data.buttons; track $index) {
+      <button matButton [mat-dialog-close]="button.value">{{button.text}}</button>
+    }
+  }
+</mat-dialog-actions>

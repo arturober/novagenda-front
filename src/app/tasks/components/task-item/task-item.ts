@@ -6,6 +6,7 @@ import { MatMenu, MatMenuContent, MatMenuItem, MatMenuTrigger } from '@angular/m
 import { Router } from '@angular/router';
 import { DateIntlPipe } from '../../../shared/pipes/date-intl-pipe';
 import { DateRelativePipe } from '../../../shared/pipes/date-relative-pipe';
+import { DeleteTaskAction } from '../../directives/delete-task-action';
 import { Task } from '../../interfaces/task';
 import { TaskService } from '../../services/task-service';
 
@@ -21,6 +22,7 @@ import { TaskService } from '../../services/task-service';
     MatMenuContent,
     MatMenuItem,
     MatMenuTrigger,
+    DeleteTaskAction,
   ],
   templateUrl: './task-item.html',
   styleUrl: './task-item.scss',
@@ -51,7 +53,9 @@ export class TaskItem {
 
   goDetails() {
     this.navigationTriggered.emit();
-    this.#router.navigate(['/tasks', this.task().id], {queryParams: {occurrenceDate: this.task().startDate}});
+    this.#router.navigate(['/tasks', this.task().id], {
+      queryParams: { occurrenceDate: this.task().startDate },
+    });
   }
 
   goEdit() {
@@ -60,20 +64,16 @@ export class TaskItem {
   }
 
   complete() {
-    this.#taskService.completeTask(this.task().id, true, this.task().startDate ?? undefined).subscribe(() => {
-      this.completed.emit(true);
-    });
+    this.#taskService
+      .completeTask(this.task().id, true, this.task().startDate ?? undefined)
+      .subscribe(() => {
+        this.completed.emit(true);
+      });
   }
 
   uncomplete() {
     this.#taskService.completeTask(this.task().id, false).subscribe(() => {
       this.completed.emit(false);
-    });
-  }
-
-  delete() {
-    this.#taskService.removeTask(this.task().id).subscribe(() => {
-      this.deleted.emit();
     });
   }
 }

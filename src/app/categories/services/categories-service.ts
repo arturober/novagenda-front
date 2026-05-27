@@ -20,4 +20,8 @@ export class CategoriesService {
   deleteCategory(categoryId: string) {
     return this.#http.delete<void>(`categories/${categoryId}`);
   }
+
+  updateCategory(categoryId: string, category: CategoryInsert) {
+    return this.#http.patch<SingleCategoryResponse>(`categories/${categoryId}`, category);
+  }
 }

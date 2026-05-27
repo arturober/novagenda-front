@@ -9,5 +9,5 @@ export interface UserRegister extends UserLogin {
 }
 
 export interface User extends Omit<UserRegister, 'password'> {
-  id: number;
+  id: string;
 }

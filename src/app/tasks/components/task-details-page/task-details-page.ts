@@ -1,4 +1,4 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input, linkedSignal } from '@angular/core';
 import { TopBar } from '../../../shared/components/top-bar/top-bar';
 import { RouterOutlet } from '@angular/router';
 import { AdaptativeTabs } from '../../../shared/components/adaptative-tabs/adaptative-tabs';
@@ -16,6 +16,6 @@ export class TaskDetailsPage {
 
   readonly #taskService = inject(TaskService);
   taskResource = this.#taskService.getTaskResource(this.id, this.occurrenceDate);
-  task = computed(() => (this.taskResource.hasValue() ? this.taskResource.value().task : null));
+  task = linkedSignal(() => (this.taskResource.hasValue() ? this.taskResource.value().task : null));
   mine = computed(() => (this.taskResource.hasValue() ? this.taskResource.value().mine : false));
 }

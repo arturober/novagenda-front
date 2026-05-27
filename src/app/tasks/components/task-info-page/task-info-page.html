@@ -8,8 +8,11 @@
         <p class="pt-2">{{ task.description }}</p>
       }
     </mat-card-content>
-    <mat-card-content class="flex! items-center gap-2 mt-2 text-" [class]="statusColorClass()">
-      @if (!task.isActive) {
+    <mat-card-content class="flex! items-center gap-2 mt-2" [class]="statusColorClass()">
+      @if (task.deletedAt) {
+        <mat-icon svgIcon="delete"></mat-icon>
+        Tarea eliminada
+      } @else if (!task.isActive) {
         <mat-icon svgIcon="check"></mat-icon>
         Tarea completada
       } @else if (pending()) {
@@ -22,21 +25,27 @@
     </mat-card-content>
     <mat-card-actions>
       @if (task.isActive) {
-        <button matButton>
+        <button matButton (click)="complete()">
           <mat-icon svgIcon="check"></mat-icon>
           Finalizar
         </button>
       } @else {
-        <button matButton>
+        <button matButton (click)="uncomplete()">
           <mat-icon svgIcon="avg-pace"></mat-icon>
           Pendiente
         </button>
       }
-      <button matButton>
+      <button matButton (click)="goEdit()">
         <mat-icon svgIcon="edit"></mat-icon>
         Editar
       </button>
-      <button matButton>
+      <button
+        matButton
+        deleteTaskAction
+        [task]="task"
+        [occurrenceDate]="occurrenceDate()"
+        (deleted)="goBack()"
+      >
         <mat-icon svgIcon="delete"></mat-icon>
         Borrar
       </button>
@@ -90,7 +99,7 @@
             {{ task.endDate ? 'Fecha Inicio' : 'Fecha' }}
           </div>
           <div matListItemLine>
-            {{ date()! | dateIntl: 'es-ES' : 'full' }}
+            {{ occurrenceDate()! || date()! | dateIntl: 'es-ES' : 'full' }}
           </div>
         </mat-list-item>
       }

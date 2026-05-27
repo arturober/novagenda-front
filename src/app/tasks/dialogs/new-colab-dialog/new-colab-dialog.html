@@ -30,7 +30,10 @@
 <mat-dialog-actions>
   @if (invitation(); as invitation) {
     <button matButton mat-dialog-close>Cerrar</button>
-    <button matButton (click)="copyUrl()">Copiar enlace</button>
+    <button matButton (click)="copyUrl()">Copiar</button>
+    @if(native) {
+      <button matButton (click)="shareUrl()">Compartir</button>
+    }
   } @else {
     <button matButton mat-dialog-close>Cancelar</button>
     <button

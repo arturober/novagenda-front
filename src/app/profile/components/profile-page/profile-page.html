@@ -1,0 +1,45 @@
+<div class="min-h-screen flex flex-col">
+  <top-bar [title]="user()?.name ?? 'Perfil'" [backUrl]="null"></top-bar>
+  <main class="page-body grow min-h-full p-4 flex flex-col items-center">
+    <mat-card class="w-3xl max-w-full p-4">
+      <mat-card-content>
+        <div class="flex flex-col gap-4 items-center">
+          <div class="relative w-fit">
+            <div class="w-32 h-32 rounded-full overflow-hidden">
+              <img [src]="user()?.photo" [alt]="user()?.name" class="w-full h-full object-cover" />
+            </div>
+            @let loggedId = loggedUserResource.value()?.user?.id ?? -1;
+            @if (user()?.id === loggedId) {
+              <button
+                matIconButton
+                class="shadow-md! absolute! bottom-0 left-0"
+                (click)="takePhoto()"
+              >
+                <mat-icon svgIcon="photo-camera"></mat-icon>
+              </button>
+              <button
+                matIconButton
+                class="shadow-md! absolute! bottom-0 right-0"
+                (click)="getGalleryPhoto()"
+              >
+                <mat-icon svgIcon="photo-library"></mat-icon>
+              </button>
+            }
+          </div>
+          <h2 class="text-xl">
+            {{ user()?.name }}
+          </h2>
+          <p>
+            {{ user()?.email }}
+          </p>
+        </div>
+      </mat-card-content>
+      @if (user()?.id === loggedId) {
+        <mat-card-actions class="flex justify-center gap-2">
+          <button matButton (click)="editName()">Editar nombre</button>
+          <button matButton (click)="editPassword()">Cambiar contraseña</button>
+        </mat-card-actions>
+      }
+    </mat-card>
+  </main>
+</div>

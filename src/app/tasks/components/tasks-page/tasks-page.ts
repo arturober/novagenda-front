@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject, input } from '@angular/core';
 import { MatFabButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
@@ -17,11 +17,21 @@ import { NewTaskDialog } from '../../dialogs/new-task-dialog/new-task-dialog';
 export class TasksPage {
   readonly #dialog = inject(MatDialog);
   readonly #router = inject(Router);
+  category = input<string>();
 
   readonly #reloadTasksEvent$ = new Subject<void>();
 
   get reloadTasksEvent$() {
     return this.#reloadTasksEvent$.asObservable();
+  }
+
+  constructor() {
+    effect(() => {
+      const category = this.category();
+      if (category) {
+        console.log(category);
+      }
+    });
   }
 
   openNewTaskDialog() {

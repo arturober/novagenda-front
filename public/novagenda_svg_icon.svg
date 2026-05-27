@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Gradiente de fondo del icono (Espacio profundo / Indigo misterioso) -->
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0b1e" />
+      <stop offset="50%" stop-color="#12132e" />
+      <stop offset="100%" stop-color="#05060f" />
+    </linearGradient>
+
+    <!-- Gradiente para el trazo de la tarea/check (Transición de inicio a éxito) -->
+    <linearGradient id="check-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4" />  <!-- Cian energético -->
+      <stop offset="40%" stop-color="#6366f1" />  <!-- Índigo tecnológico -->
+      <stop offset="80%" stop-color="#d946ef" />  <!-- Fucsia brillante -->
+      <stop offset="100%" stop-color="#fbbf24" /> <!-- Oro Nova -->
+    </linearGradient>
+
+    <!-- Gradiente para la estrella Nova (Núcleo brillante y cálido) -->
+    <linearGradient id="star-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />  <!-- Centro blanco de máxima energía -->
+      <stop offset="40%" stop-color="#fef08a" />  <!-- Amarillo suave -->
+      <stop offset="100%" stop-color="#f59e0b" /> <!-- Ámbar cálido -->
+    </linearGradient>
+
+    <!-- Reflejo de luz superior para efecto de cristal satinado -->
+    <radialGradient id="light-reflect" cx="50%" cy="0%" r="60%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Patrón de cuadrícula de agenda (Dotted Grid) -->
+    <pattern id="dot-grid" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="15" cy="15" r="1.5" fill="#ffffff" fill-opacity="0.08" />
+    </pattern>
+
+    <!-- Filtro de sombra paralela para dar volumen 3D al check y a la estrella -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+
+    <!-- Filtro de resplandor para la estrella Nova -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="15" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Base del Icono (Squircle redondeado estilo App móvil premium) -->
+  <!-- Tarea 2: Segunda línea de progreso de la agenda -->
+<circle cx="145" cy="250" r="14" fill="none" />
+<path d="M 205,250 H 260" />
+
+<!-- 
+  STREAMING_CHUNK: Trazado del Checkmark de éxito (Tarea completada).
+  Comienza alineado con las viñetas anteriores y fluye dinámicamente hacia arriba.
+-->
+<path d="M 145,330 L 215,400 L 320,295" />
+
+<!-- 
+  STREAMING_CHUNK: Trazado de la Estrella Nova (El éxito y la claridad).
+  Una estrella de cuatro puntas de curvas perfectas que corona el final de las tareas.
+-->
+<path d="M 360,90 Q 360,150 300,150 Q 360,150 360,210 Q 360,150 420,150 Q 360,150 360,90 Z" />
+</svg>

@@ -7,12 +7,15 @@ import {
   MatDialogTitle,
   MatDialogContent,
   MatDialogRef,
+  MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { MatFormField, MatLabel, MatInput } from '@angular/material/input';
 import { MatChip } from '@angular/material/chips';
 import { CategoriesService } from '../../services/categories-service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Category, SingleCategoryResponse } from '../../interfaces/category';
+import { Observable } from 'rxjs';
 
 interface NewCategoryModel {
   name: string;
@@ -43,11 +46,12 @@ export class NewCategoryDialog {
   readonly #destroyRef = inject(DestroyRef);
   readonly #categoriesService = inject(CategoriesService);
   readonly #snackBar = inject(MatSnackBar);
+  readonly category = inject<Category | null>(MAT_DIALOG_DATA);
 
   categoryModel = signal<NewCategoryModel>({
-    name: '',
-    description: '',
-    bgColor: '#ffffff',
+    name: this.category?.name ?? '',
+    description: this.category?.description ?? '',
+    bgColor: this.category?.bgColor ?? '#ffffff',
   });
 
   categoryForm = form(
@@ -58,7 +62,7 @@ export class NewCategoryDialog {
     },
     {
       submission: {
-        action: async () => this.addCategory(),
+        action: async () => this.saveCategory(),
       },
     },
   );
@@ -75,9 +79,14 @@ export class NewCategoryDialog {
     });
   });
 
-  addCategory() {
-    this.#categoriesService
-      .insertCategory({ ...this.categoryModel(), color: this.textColor() })
+  saveCategory() {
+    let saveAction$: Observable<SingleCategoryResponse>;
+    if (this.category) {
+      saveAction$ = this.#categoriesService.updateCategory(this.category.id, { ...this.categoryModel(), color: this.textColor() });
+    } else {
+      saveAction$ = this.#categoriesService.insertCategory({ ...this.categoryModel(), color: this.textColor() });
+    }
+    saveAction$
       .pipe(takeUntilDestroyed(this.#destroyRef))
       .subscribe({
         next: (resp) => this.#dialogRef.close(resp.category),

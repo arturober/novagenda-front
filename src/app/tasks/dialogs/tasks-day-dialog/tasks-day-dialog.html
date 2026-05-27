@@ -1,8 +1,8 @@
 <h2 mat-dialog-title>{{ data.date | dateIntl: 'es-ES' : 'full' }}</h2>
 <mat-dialog-content>
   <div class="flex flex-col gap-2">
-  @for (task of data.tasks; track task.id) {
-    <task-item [task]="task" (navigationTriggered)="close()"></task-item>
+  @for (task of tasks(); track task.id) {
+    <task-item [task]="task" (navigationTriggered)="close()" (deleted)="removeTask(task)" (completed)="removeTask(task)"></task-item>
   } @empty {
     <p>No hay tareas para este día</p>
   }

@@ -15,6 +15,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Invitation } from '../../interfaces/invitation';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Clipboard } from '@capacitor/clipboard';
+import { Share } from '@capacitor/share';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'new-colab-dialog',
@@ -47,6 +49,8 @@ export class NewColabDialog {
   isUserRegistered = signal(false);
   url = computed(() => location.origin + '/invitations/' + this.invitation()?.id);
 
+  native = Capacitor.isNativePlatform();
+
   userTypeField = form(this.userType);
   emailField = form(this.email, (field) => {
     required(field);
@@ -77,6 +81,14 @@ export class NewColabDialog {
     this.#snackBar.open('Enlace copiado correctamente', 'Cerrar', {
       duration: 3000,
       panelClass: 'success',
+    });
+  }
+
+  async shareUrl() {
+    await Share.share({
+      url: this.url(),
+      title: 'Invitación para colaborar en una tarea',
+      text: 'Te han invitado a colaborar en una tarea, ¡únete a través de este enlace!',
     });
   }
 }

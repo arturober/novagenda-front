@@ -48,6 +48,8 @@ export class IconService {
     'chevron-left',
     'chevron-right',
     'send',
+    'photo-camera',
+    'photo-library',
   ];
 
   public registerIcons(): void {

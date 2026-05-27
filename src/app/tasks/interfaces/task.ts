@@ -20,6 +20,7 @@ export interface Task extends Required<Omit<TaskInsert, 'category'>> {
   isActive: boolean;
   category: Category | null;
   interactions: TaskInteraction[];
+  deletedAt?: string | null;
 }
 
 export interface TaskListResponse {

@@ -1,6 +1,8 @@
 <div class="text-center mb-8 mt-8 header">
-  <mat-icon aria-label="Novagenda Logo" svgIcon="select-check-box" class="!h-8 !w-8"></mat-icon>
-  <h1 class="text-3xl font-bold text-(--mat-sys-primary) mb-2">Novagenda</h1>
+  <h1 class="text-3xl font-bold text-(--mat-sys-primary) mb-2 flex items-center justify-center gap-2">
+    <img src="icon-foreground.svg" alt="Novagenda" class="h-10! w-10!" />
+    Novagenda
+  </h1>
   <p class="text-(--mat-sys-secondary)">Organiza tu vida, una tarea a la vez</p>
 </div>
 
@@ -12,12 +14,7 @@
     <form [formRoot]="registerForm" class="flex flex-col gap-4">
       <mat-form-field class="w-full" appearance="outline">
         <mat-label>Nombre</mat-label>
-        <input
-          type="text"
-          matInput
-          [formField]="registerForm.name"
-          placeholder="Marta Martínez"
-        />
+        <input type="text" matInput [formField]="registerForm.name" placeholder="Marta Martínez" />
         @let nameErrors = registerForm.name().errors();
         @for (error of nameErrors; track $index) {
           <mat-error>{{ error.message }}</mat-error>
@@ -38,9 +35,19 @@
       </mat-form-field>
 
       @let passErrors = registerForm.password().errors();
-      <mat-form-field class="w-full" appearance="outline" [class.mb-4]="passErrors.find(e => e.kind === 'pattern')">
+      <mat-form-field
+        class="w-full"
+        appearance="outline"
+        [class.mb-4]="passErrors.find(e => e.kind === 'pattern')"
+      >
         <mat-label>Contraseña</mat-label>
-        <button matPrefix matIconButton tabindex="-1" aria-label="Show" (click)="showPass.update(s => !s)">
+        <button
+          matPrefix
+          matIconButton
+          tabindex="-1"
+          aria-label="Show"
+          (click)="showPass.update(s => !s)"
+        >
           <mat-icon [svgIcon]="showPass() ? 'eye-hidden' : 'eye-visible'"></mat-icon>
         </button>
         <input
@@ -66,7 +73,13 @@
       </mat-form-field>
       <mat-form-field class="w-full" appearance="outline">
         <mat-label>Repite Contraseña</mat-label>
-        <button matPrefix matIconButton tabindex="-1" aria-label="Show" (click)="showPass2.update(s => !s)">
+        <button
+          matPrefix
+          matIconButton
+          tabindex="-1"
+          aria-label="Show"
+          (click)="showPass2.update(s => !s)"
+        >
           <mat-icon [svgIcon]="showPass2() ? 'eye-hidden' : 'eye-visible'"></mat-icon>
         </button>
         <input
@@ -91,20 +104,24 @@
           <mat-error>{{ error.message }}</mat-error>
         }
       </mat-form-field>
-      <button type="submit" matButton="filled" class="w-full" [disabled]="registerForm().invalid()">Crear cuenta</button>
+      <button type="submit" matButton="filled" class="w-full" [disabled]="registerForm().invalid()">
+        Crear cuenta
+      </button>
     </form>
     <div class="relative my-6">
       <div class="absolute inset-0 flex items-center">
         <div class="w-full border-t border-gray-300"></div>
       </div>
       <div class="relative flex justify-center text-sm">
-        <span class="px-4 bg-(--mat-sys-surface-container-lowest) text-(--mat-sys-secondary)">O regístrate con</span>
+        <span class="px-4 bg-(--mat-sys-surface-container-lowest) text-(--mat-sys-secondary)"
+          >O regístrate con</span
+        >
       </div>
     </div>
 
     <div class="row col-2 offset-sm-2">
       @defer {
-      <div googleLogin class="w-full" (login)="loggedGoogle($event)"></div>
+        <div googleLogin class="w-full" (login)="loggedGoogle($event)"></div>
       }
     </div>
 

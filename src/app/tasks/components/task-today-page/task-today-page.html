@@ -17,7 +17,7 @@
   <mat-card-content>
     <div class="grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-2">
       @for (task of tasks(); track task.id) {
-        <task-item [task]="task"></task-item>
+        <task-item [task]="task" (deleted)="tasklistResource.reload()" (completed)="tasklistResource.reload()"></task-item>
       }
     </div>
     @if(!tasks().length) {
