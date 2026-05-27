@@ -49,7 +49,11 @@ export class TaskCommentsPage {
       .insertComment(this.id(), this.newCommentModel())
       .pipe(takeUntilDestroyed(this.#destroyRef))
       .subscribe({
-        next: (resp) => this.comments.update((comments) => [resp.comment].concat(comments)),
+        next: (resp) => {
+          this.comments.update((comments) => [resp.comment].concat(comments));
+          this.newCommentModel.set({ content: '' });
+          this.newCommentForm().reset();
+        },
         error: (err) =>
           this.#snackBar.open(err.error.message ?? err.error.error, 'Cerrar', {
             duration: 3000,
