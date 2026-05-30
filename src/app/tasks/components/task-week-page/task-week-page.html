@@ -1,13 +1,13 @@
 <mat-card appearance="outlined">
   <header class="p-4">
-    <button matIconButton (click)="prevWeek()">
+    <button matIconButton (click)="prevWeek()" aria-label="Semana anterior">
       <mat-icon svgIcon="chevron-left"></mat-icon>
     </button>
     <mat-card-title
       >{{ weekStart() | dateIntl: 'es-ES' : 'medium' | firstUppercase }} -
       {{ weekEnd() | dateIntl: 'es-ES' : 'medium' | firstUppercase }}</mat-card-title
     >
-    <button matIconButton (click)="nextWeek()">
+    <button matIconButton (click)="nextWeek()" aria-label="Semana siguiente">
       <mat-icon svgIcon="chevron-right"></mat-icon>
     </button>
   </header>

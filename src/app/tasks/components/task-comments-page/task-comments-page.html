@@ -7,7 +7,7 @@
     <mat-form-field class="pt-2 w-full" appearance="outline">
       <textarea type="text" matInput [formField]="newCommentForm.content" placeholder="Nuevo comentario..." class="resize-none! w-[stretch]! mr-6!" rows="3"></textarea>
     </mat-form-field>
-    <button matIconButton class="send-comment absolute! bottom-5 right-1" [disabled]="newCommentForm().invalid()" (click)="insertComment()">
+    <button matIconButton aria-label="Enviar comentario" class="send-comment absolute! bottom-5 right-1" [disabled]="newCommentForm().invalid()" (click)="insertComment()">
       <mat-icon svgIcon="send"></mat-icon>
     </button>
   </div>

@@ -1,10 +1,10 @@
 <mat-card appearance="outlined">
   <header class="p-4">
-    <button matIconButton (click)="prevMonth()">
+    <button matIconButton (click)="prevMonth()" aria-label="Mes anterior">
       <mat-icon svgIcon="chevron-left"></mat-icon>
     </button>
     <mat-card-title>{{ monthName() | firstUppercase }}</mat-card-title>
-    <button matIconButton (click)="nextMonth()">
+    <button matIconButton (click)="nextMonth()" aria-label="Mes siguiente">
       <mat-icon svgIcon="chevron-right"></mat-icon>
     </button>
   </header>

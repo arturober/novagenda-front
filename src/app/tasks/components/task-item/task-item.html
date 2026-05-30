@@ -5,7 +5,7 @@
   (click)="goDetails()"
 >
   <div class="absolute top-2 right-1">
-    <button matIconButton [matMenuTriggerFor]="optionsMenu" (click)="$event.stopPropagation()">
+    <button matIconButton [matMenuTriggerFor]="optionsMenu" (click)="$event.stopPropagation()" aria-label="Opciones de tarea">
       <mat-icon svgIcon="more-vert"></mat-icon>
     </button>
   </div>

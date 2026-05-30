@@ -40,7 +40,7 @@
        y1="39.470464"
        x2="105.53515"
        y2="110.70123"
-       gradientTransform="matrix(0.43308552,0,0,0.37640124,36.727629,33.968754)"
+       gradientTransform="matrix(0.90395808,0,0,0.78564377,7.7762224,3.6583827)"
        gradientUnits="userSpaceOnUse">
       <stop
          offset="0"
@@ -55,7 +55,7 @@
     </linearGradient>
   </defs>
   <rect
-     style="fill:#0d0c2c;fill-opacity:1;stroke:none;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"
      id="rect8"
      width="120"
      height="120"
@@ -64,41 +64,42 @@
      rx="0"
      inkscape:export-filename="../assets/splash-dark.png"
      inkscape:export-xdpi="1024.5"
-     inkscape:export-ydpi="1024.5" />
+     inkscape:export-ydpi="1024.5"
+     ry="60" />
   <rect
-     x="44.220146"
-     y="44.0625"
-     width="33.169342"
-     height="5.6861734"
-     rx="2.8430867"
+     x="23.414984"
+     y="24.726562"
+     width="69.232735"
+     height="11.86847"
+     rx="5.9342351"
      fill="#CBD5E1"
      id="rect2"
      style="fill:#b5b6dc;fill-opacity:1;stroke-width:0;stroke-dasharray:none" />
   <rect
-     x="44.0625"
-     y="55.229095"
-     width="33.780235"
-     height="5.7908983"
-     rx="2.8954487"
+     x="23.085938"
+     y="48.034046"
+     width="70.50782"
+     height="12.087057"
+     rx="6.0435276"
      fill="#CBD5E1"
      id="rect3"
-     style="fill:#b5b6dc;fill-opacity:1;stroke-width:0.482574" />
+     style="fill:#b5b6dc;fill-opacity:1;stroke-width:1.00725" />
   <rect
-     x="44.279266"
-     y="68.287491"
-     width="18.692099"
-     height="5.6076298"
-     rx="2.8038149"
+     x="23.538383"
+     y="75.290192"
+     width="39.015095"
+     height="11.70453"
+     rx="5.8522649"
      fill="#CBD5E1"
      id="rect4"
-     style="fill:#b5b6dc;fill-opacity:1;stroke-width:0.467304" />
+     style="fill:#b5b6dc;fill-opacity:1;stroke-width:0.975381" />
   <path
-     d="m 54.896371,64.249991 8.074997,8.074995 16.149992,-20.18749"
+     d="M 45.698943,66.862917 62.553486,83.717456 96.262568,41.581102"
      fill="none"
      stroke="url(#checkGradient)"
      stroke-width="12"
      stroke-linecap="round"
      stroke-linejoin="round"
      id="path4"
-     style="stroke:url(#checkGradient);stroke-width:6.62401;stroke-dasharray:none" />
+     style="stroke:url(#checkGradient);stroke-width:13.8259;stroke-dasharray:none" />
 </svg>

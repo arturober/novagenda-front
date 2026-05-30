@@ -45,7 +45,7 @@
           matPrefix
           matIconButton
           tabindex="-1"
-          aria-label="Show"
+          aria-label="Mostrar contraseña"
           (click)="showPass.update(s => !s)"
         >
           <mat-icon [svgIcon]="showPass() ? 'eye-hidden' : 'eye-visible'"></mat-icon>
@@ -60,7 +60,7 @@
           <button
             matSuffix
             matIconButton
-            aria-label="Clear"
+            aria-label="Limpiar contraseña"
             (click)="registerForm.password().value.set('')"
           >
             <mat-icon svgIcon="close"></mat-icon>
@@ -77,7 +77,7 @@
           matPrefix
           matIconButton
           tabindex="-1"
-          aria-label="Show"
+          aria-label="Mostrar contraseña"
           (click)="showPass2.update(s => !s)"
         >
           <mat-icon [svgIcon]="showPass2() ? 'eye-hidden' : 'eye-visible'"></mat-icon>
@@ -92,7 +92,7 @@
           <button
             matSuffix
             matIconButton
-            aria-label="Clear"
+            aria-label="Limpiar contraseña"
             (click)="registerForm.repeatPassword().value.set('')"
           >
             <mat-icon svgIcon="close"></mat-icon>

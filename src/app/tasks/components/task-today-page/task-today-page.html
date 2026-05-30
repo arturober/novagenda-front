@@ -1,16 +1,16 @@
 <mat-card appearance="outlined">
   <header class="p-4">
-    <button matIconButton (click)="prevDay()">
+    <button matIconButton (click)="prevDay()" aria-label="Día anterior">
       <mat-icon svgIcon="chevron-left"></mat-icon>
     </button>
     <mat-card-title>{{ date() | dateIntl: 'es-ES' : 'full' | firstUppercase }}</mat-card-title>
-    <button matIconButton (click)="picker.open()">
+    <button matIconButton (click)="picker.open()" aria-label="Seleccionar fecha" >
       <mat-icon svgIcon="today"></mat-icon>
       <input matInput [matDatepicker]="picker" [formField]="dateField" class="invisible w-0 h-0">
       <mat-datepicker #picker [touchUi]="isMobileOS"></mat-datepicker>
     </button>
 
-    <button matIconButton (click)="nextDay()">
+    <button matIconButton (click)="nextDay()" aria-label="Día siguiente">
       <mat-icon svgIcon="chevron-right"></mat-icon>
     </button>
   </header>
