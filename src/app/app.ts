@@ -152,7 +152,7 @@ export class App {
       'pushNotificationActionPerformed',
       (notification: ActionPerformed) => {
         if (notification.notification.data.taskId) {
-          this.#router.navigate(['/tasks', notification.notification.data.taskId]);
+          this.#router.navigate(['/tasks', notification.notification.data.taskId, 'comments']);
         }
       }
     );
