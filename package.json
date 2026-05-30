@@ -9,8 +9,7 @@
     "test": "ng test",
     "serve:ssr:novagenda-front": "node dist/novagenda-front/server/server.mjs",
     "lint": "ng lint",
-    "capacitor:dev": "ng run novagenda-front:build-mobile && npx cap sync",
-    "capacitor:prod": "ng run novagenda-front:build-mobile --prod && npx cap sync",
+    "capacitor": "ng run novagenda-front:build-mobile && npx cap sync",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run --e2e"
   },
