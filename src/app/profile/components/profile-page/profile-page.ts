@@ -9,7 +9,7 @@ import { ProfileService } from '../../services/profile-service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditName } from '../../dialogs/edit-name/edit-name';
 import { EditPassword } from '../../dialogs/edit-password/edit-password';
-
+import { Filesystem } from '@capacitor/filesystem';
 
 @Component({
   selector: 'profile-page',
@@ -37,11 +37,13 @@ export class ProfilePage {
     const result = await Camera.takePhoto({
       quality: 90,
       encodingType: EncodingType.JPEG,
+      editable: 'in-app',
       targetWidth: 400,
     });
 
     if(result) {
-      const photoBase64 = `data:image/${result.metadata?.format ?? 'jpeg'};base64,${result.thumbnail}`;
+      const { data } = await Filesystem.readFile({ path: result.uri as string });
+      const photoBase64 = `data:image/${result.metadata?.format ?? 'jpeg'};base64,${data}`;
       this.saveAvatar(photoBase64);
     }
   }
@@ -50,6 +52,7 @@ export class ProfilePage {
     const { results: [result]} = await Camera.chooseFromGallery({
       quality: 90,
       targetWidth: 400,
+      editable: 'in-app',
     });
 
     if(result) {
